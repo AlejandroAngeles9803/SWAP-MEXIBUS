@@ -195,11 +195,11 @@
       </ul>
 
       <!-- User Area -->
-      <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
+      <div class="relative" x-data="datosUsuario()" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
         <a class="flex items-center gap-4" href="#" @click.prevent="dropdownOpen = ! dropdownOpen">
           <span class="hidden text-right lg:block">
-            <span class="block text-sm font-medium text-black dark:text-white">Usuario</span>
-            <span class="block text-xs font-medium">Contratante</span>
+            <span class="block text-sm font-medium text-black dark:text-white"  x-text="nombre"></span>
+            <span class="block text-xs font-medium"  x-text="rol"></span>
           </span>
 
           <span class="h-10 w-10 rounded-full">
@@ -269,4 +269,13 @@
       <!-- User Area -->
     </div>
   </div>
+  <script>
+    function datosUsuario() {
+      return {
+        nombre: localStorage.getItem('nombre') || 'Invitado',
+        rol: localStorage.getItem('rol') || '',
+        dropdownOpen: false,
+      }
+    }
+  </script>
 </header>

@@ -215,3 +215,27 @@ span.flatpickr-weekday,
 [x-cloak] {
   display: none !important;
 }
+
+/* styles.css */
+.fc-col-header-cell {
+  @apply bg-primary text-white;
+}
+
+.fc-daygrid-day-frame{
+  @apply dark:bg-boxdark;
+  @apply rounded-tl-sm;
+  @apply border border-stroke;
+  @apply cursor-pointer;
+}
+ .fc-today {
+  @apply dark:bg-blue-100 text-blue-800;
+}
+
+
+
+
+.fc-daygrid-day-frame:hover{
+  @apply dark:bg-meta-4;
+  @apply cursor-pointer;
+}
+

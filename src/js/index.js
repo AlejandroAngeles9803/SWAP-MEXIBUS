@@ -10,6 +10,7 @@ import chart01 from "./components/chart-01";
 import chart02 from "./components/chart-02";
 import chart03 from "./components/chart-03";
 import chart04 from "./components/chart-04";
+import { initCalendar } from './components/calendar';
 import map01 from "./components/map-01";
 import { Spanish } from 'flatpickr/dist/l10n/es.js'
 Alpine.plugin(persist);
@@ -80,6 +81,8 @@ nextArrow:
   
 });
 
+
+
 // Document Loaded
 document.addEventListener("DOMContentLoaded", () => {
   chart01();
@@ -87,4 +90,5 @@ document.addEventListener("DOMContentLoaded", () => {
   chart03();
   chart04();
   map01();
+  initCalendar();
 });

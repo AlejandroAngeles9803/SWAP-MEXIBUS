@@ -49,7 +49,7 @@
               class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
               href="#"
               @click.prevent="selected = (selected === 'Dashboard' ? '':'Dashboard')"
-              :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Dashboard') || (page === 'inicio' ) }"
+              :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Dashboard') || (page === 'inicio' ) || (page === 'carrito')}"
             >
               <svg
                 class="fill-current"
@@ -109,6 +109,15 @@
                     href="index.html"
                     :class="page === 'inicio' && '!text-white'"
                     > Tu Inicio
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                    href="carrito.html"
+                    :class="page === 'carrito' && '!text-white'"
+                    > Carrito
                   </a>
                 </li>
               </ul>
@@ -400,7 +409,7 @@
           </li>
           <!-- Menu Item Settings -->
         </ul>
-      </div>
+      </div>  
 
       <!-- Others Group -->
       <div>
@@ -608,7 +617,7 @@
                 <li>
                   <a
                     class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                    href="signin.html"
+                    href="singnin.html"
                     :class="page === 'signin' && '!text-white'"
                     >Iniciar Sesión</a
                   >

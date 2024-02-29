@@ -9,7 +9,7 @@
 <link rel="icon" href="favicon.ico"><link href="style.css" rel="stylesheet"></head>
 
 <body
-    x-data="{ page: 'signup', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-data="{ page: 'recuperar', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
@@ -81,7 +81,7 @@
               class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
               href="#"
               @click.prevent="selected = (selected === 'Dashboard' ? '':'Dashboard')"
-              :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Dashboard') || (page === 'inicio' ) }"
+              :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Dashboard') || (page === 'inicio' ) || (page === 'carrito')}"
             >
               <svg
                 class="fill-current"
@@ -143,6 +143,15 @@
                     > Tu Inicio
                   </a>
                 </li>
+
+                <li>
+                  <a
+                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                    href="carrito.html"
+                    :class="page === 'carrito' && '!text-white'"
+                    > Carrito
+                  </a>
+                </li>
               </ul>
             </div>
             <!-- Dropdown Menu End -->
@@ -153,7 +162,7 @@
           <li>
             <a
               class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-              href="calendar.html"
+              href="calendario.html"
               @click="selected = (selected === 'Calendar' ? '':'Calendar')"
               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Calendar') && (page === 'calendario') }"
             >
@@ -378,7 +387,7 @@
                 <li>
                   <a
                     class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                    href="modifcar.html"
+                    href="modificar.html"
                     :class="page === 'modifcar' && '!text-white'"
                     >Modificar Publicidad</a
                   >
@@ -432,7 +441,7 @@
           </li>
           <!-- Menu Item Settings -->
         </ul>
-      </div>
+      </div>  
 
       <!-- Others Group -->
       <div>
@@ -640,7 +649,7 @@
                 <li>
                   <a
                     class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                    href="signin.html"
+                    href="singnin.html"
                     :class="page === 'signin' && '!text-white'"
                     >Iniciar Sesión</a
                   >
@@ -657,7 +666,7 @@
                 <li>
                   <a
                     class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                    href="recuperar.html"
+                    href="recuperar-contraseña.html"
                     :class="page === 'recuperar' && '!text-white'"
                     >Recuperar Cotraseña</a
                   >
@@ -881,11 +890,11 @@
       </ul>
 
       <!-- User Area -->
-      <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
+      <div class="relative" x-data="datosUsuario()" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
         <a class="flex items-center gap-4" href="#" @click.prevent="dropdownOpen = ! dropdownOpen">
           <span class="hidden text-right lg:block">
             <span class="block text-sm font-medium text-black dark:text-white">Usuario</span>
-            <span class="block text-xs font-medium">Contratante</span>
+            <span class="block text-xs font-medium">Rol</span>
           </span>
 
           <span class="h-10 w-10 rounded-full">
@@ -955,6 +964,15 @@
       <!-- User Area -->
     </div>
   </div>
+  <script>
+    function datosUsuario() {
+      return {
+        nombre: localStorage.getItem('nombre') || 'Invitado',
+        rol: localStorage.getItem('rol') || '',
+        dropdownOpen: false,
+      }
+    }
+  </script>
 </header>
             <!-- ===== Header End ===== -->
 

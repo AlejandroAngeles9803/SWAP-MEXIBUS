@@ -5,15 +5,21 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Registrarse | SWAP-MEXIBUS</title>
+  <title>Modificar| SWAP-MEXIBUS</title>
 <link rel="icon" href="favicon.ico"><link href="style.css" rel="stylesheet"></head>
 
 <body
-  x-data="{ page: 'signup', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+
+  x-data="{ page: 'carrito', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
   x-init="
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
   :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+  <script>
+    if (!localStorage.getItem('token')) {
+      window.location.href = '/singnin.html';
+    }
+  </script>
   <!-- ===== Preloader Start ===== -->
   <div
   x-show="loaded"
@@ -979,267 +985,181 @@
       <!-- ===== Main Content Start ===== -->
       <main>
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-          <!-- Breadcrumb Start -->
-          <div class="mb-6 flex flex-col gap-3  sm:flex-row sm:items-center sm:justify-between">
-            <!-- <h2 class="text-title-md2 font-bold text-black dark:text-white">
-              Registrarse
-            </h2> -->
-
-            <nav>
-              <ol class="flex items-center gap-2">
-                <li>
-                  <a class="font-medium" href="index.html"> Inicio /</a>
-                </li>
-                <li class="font-medium text-primary">Registrarse</li>
-              </ol>
-            </nav>
-          </div>
-          <!-- Breadcrumb End -->
-
-          <!-- ====== Forms Section Start -->
-          <div x-data="manejoRegistro()"
-            class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div class="flex flex-wrap items-center">
-
-
-              <div class=" w-full xl:block xl:w-1/2">
-                <div class="w-full p-4 sm:p-12.5 xl:p-17.5">
-                  <form @submit.prevent="submitForm">
-
-                    <!-- <a class="mb-5.5 inline-block" href="index.html">
-                    <img class="hidden dark:block" src="./images/logo/swap.png" alt="Logo" />
-                    <img class="dark:hidden" src="./images/logo/swap.png" alt="Logo" />
-                  </a>
-                  <span class=" inline-block">
-                    <img src="./images/illustration/illustration-03.svg" alt="illustration" />
-                  </span> -->
-                    <span class="mb-1.5 block font-medium">Empieza Gratis</span>
-                    <h2 class="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                      Registrarse en SWAP-MEXIBUS
-                    </h2>
-
-                    <!-- Input Nombre -->
-                    <div class="mb-4">
-                      <label class="mb-2.5 block font-medium text-black dark:text-white">Nombre(s)</label>
-                      <div class="relative">
-                        <input type="text" placeholder="Ingresa tu nombre o nombres" id="nombre" x-model="nombre"
-                          required name="nombre"
-                          class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" />
-
-                        <span class="absolute right-4 top-4">
-                          <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g opacity="0.5">
-                              <path
-                                d="M11.0008 9.52185C13.5445 9.52185 15.607 7.5281 15.607 5.0531C15.607 2.5781 13.5445 0.584351 11.0008 0.584351C8.45703 0.584351 6.39453 2.5781 6.39453 5.0531C6.39453 7.5281 8.45703 9.52185 11.0008 9.52185ZM11.0008 2.1656C12.6852 2.1656 14.0602 3.47185 14.0602 5.08748C14.0602 6.7031 12.6852 8.00935 11.0008 8.00935C9.31641 8.00935 7.94141 6.7031 7.94141 5.08748C7.94141 3.47185 9.31641 2.1656 11.0008 2.1656Z"
-                                fill="" />
-                              <path
-                                d="M13.2352 11.0687H8.76641C5.08828 11.0687 2.09766 14.0937 2.09766 17.7719V20.625C2.09766 21.0375 2.44141 21.4156 2.88828 21.4156C3.33516 21.4156 3.67891 21.0719 3.67891 20.625V17.7719C3.67891 14.9531 5.98203 12.6156 8.83516 12.6156H13.2695C16.0883 12.6156 18.4258 14.9187 18.4258 17.7719V20.625C18.4258 21.0375 18.7695 21.4156 19.2164 21.4156C19.6633 21.4156 20.007 21.0719 20.007 20.625V17.7719C19.9039 14.0937 16.9133 11.0687 13.2352 11.0687Z"
-                                fill="" />
-                            </g>
-                          </svg>
-                        </span>
+          <div class="mx-auto max-w-270">
+            <!-- Breadcrumb Start -->
+            <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                  Finaliza tu Compra
+                </h2>
+    
+                <nav>
+                  <ol class="flex items-center gap-2">
+                    <li>
+                      <a class="font-medium" href="index.html">Inicio /</a>
+                    </li>
+                    <li class="font-medium text-primary">Carrito</li>
+                  </ol>
+                </nav>
+              </div>
+            <div class="container mx-auto my-12">
+                <div class="flex flex-col gap-6 md:flex-row">
+                  <div class="flex-1 shrink-0 rounded-sm border border-neutral-200 bg-white px-4 py-8 shadow-sm  dark:bg-boxdark ">
+                    <div class="mb-8">
+                      <h3 class="text-2xl text-black font-bold dark:text-white ">Resúmen de tu Compra</h3>
+                      <p>Welkom in jouw Winkelwagen</p>
+                    </div>
+                    <ul role="list" class="-my-6 divide-y divide-neutral-200">
+                      <!-- product item 1 -->
+            
+                      <li class="flex py-6">
+                        <div class="h-32 w-24 flex-shrink-0 overflow-hidden rounded-sm border bg-neutral-50">
+                          <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center" />
+                        </div>
+            
+                        <div class="ml-4 flex flex-1 flex-col">
+                          <div>
+                            <div class="flex justify-between text-sm text-gray-900">
+                              <h3 class="text-base font-bold"><a href="#">  </a></h3>
+                              <button type="button" class="flex gap-2 font-medium text-neutral-400 hover:text-neutral-900">
+                                <p class="text-xs font-normal text-black dark:text-white ">Eliminar</p>
+                                <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                              </button>
+                            </div>
+                            <div class="mt-2">
+                              <p class="text-xs text-neutral-400">Linea: Linea 1</p>
+                              <p class="text-xs text-neutral-400">Estación: Tecamac</p>
+                              <p class="text-xs text-neutral-400">Ubicación: Externa</p>
+                              <p class="text-xs text-neutral-400">Orientación: Sur</p>
+                            </div>
+                          </div>
+                          <div class="mt-auto flex flex-1 items-end justify-between text-sm">
+                            <div>
+                              <label for="quantity" class="sr-only">aantal</label>
+                              <select id="location" name="location" class="mt-1 block border-gray-500 py-2 pl-3 pr-10 text-base focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm dark:bg-boxdark dark:text-white">
+                                <option>1</option>
+                                <option selected>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>22</option>
+                              </select>
+                            </div>
+            
+                            <div class="flex">
+                              <div class="text-right">
+                                <p class="text-sm font-bold text-orange-600">90.00</p>
+                                <p class="text-xs text-gray-500">Origineel: <span class="text-sm font-bold line-through">€ 299,85 </span></p>
+                                <div class="mt-1 flex flex-row items-center gap-2">
+                                  <svg class="h-3 w-3 rotate-90 stroke-2 text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                                  <p class="text-xs font-normal text-neutral-400">Titel van korting</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+            
+                      <!-- product item 2 -->
+                      <li class="flex py-6">
+                        <div class="h-32 w-24 flex-shrink-0 overflow-hidden rounded-sm border bg-neutral-50">
+                          <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center" />
+                        </div>
+            
+                        <div class="ml-4 flex flex-1 flex-col">
+                          <div>
+                            <div class="flex justify-between text-sm text-gray-900">
+                              <h3 class="text-base font-bold"><a href="#"> Throwback Hip Bag </a></h3>
+                              <button type="button" class="flex gap-2 font-medium text-neutral-400 hover:text-neutral-900">
+                                <p class="text-xs font-normal">Verwijderen</p>
+                                <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                              </button>
+                            </div>
+                            <div class="mt-2">
+                              <p class="text-xs text-neutral-400">property: een propertie op het product</p>
+                            </div>
+                          </div>
+                          <div class="mt-auto flex flex-1 items-end justify-between text-sm">
+                            <div>
+                              <label for="quantity" class="sr-only">aantal</label>
+                              <select id="location" name="location" class="mt-1 block border-gray-500 py-2 pl-3 pr-10 text-base focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm">
+                                <option>1</option>
+                                <option selected>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>22</option>
+                              </select>
+                            </div>
+            
+                            <div class="flex">
+                              <div class="text-right">
+                                <p class="text-sm font-bold text-orange-600">90.00</p>
+                                <p class="text-xs text-gray-500">Origineel: <span class="text-sm font-bold line-through">€ 299,85 </span></p>
+                                <div class="mt-1 flex flex-row items-center gap-2">
+                                  <svg class="h-3 w-3 rotate-90 stroke-2 text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                                  <p class="text-xs font-normal text-neutral-400">Titel van korting</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+            
+                  <!-- Totaalprijs -->
+            
+                  <div class="sticky space-y-4 rounded-sm border border-neutral-200 bg-white py-6 px-4 shadow-sm sm:px-6 md:w-1/3 dark:bg-boxdark">
+                    <!-- pricing totals -->
+                    <h4 class="text-2xl font-bold">Total a Pagar</h4>
+                    <div class="flex flex-col gap-2">
+                      <div class="flex justify-between text-base text-gray-900">
+                        <p>Sub Total</p>
+                        <p>262.00</p>
+                      </div>
+                      <div class="flex justify-between text-base text-gray-900">
+                        <p>IVA</p>
+                        <p>16%</p>
+                      </div>
+                      <div class="flex justify-between text-base text-gray-900">
+                        <p>BTW</p>
+                        <p>262.00</p>
+                      </div>
+                      <div class="flex justify-between text-base text-gray-900">
+                        <p>korting</p>
+                        <p>262.00</p>
+                      </div>
+                      <div class="flex flex-row items-center justify-end gap-2">
+                        <svg class="h-4 w-4 rotate-90 stroke-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                        <p class="text-xs font-normal text-neutral-400">Titel van de korting</p>
+                      </div>
+                      <div class="flex flex-row items-center justify-end gap-2">
+                        <svg class="h-4 w-4 rotate-90 stroke-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                        <p class="text-xs font-normal text-neutral-400">Extra korting</p>
+                      </div>
+                      <div>
+                        <div class="my-2 w-full border-t border-gray-300"></div>
+                        <div class="flex justify-between text-base font-bold text-gray-900">
+                          <p>Totaal</p>
+                          <p>1200,-</p>
+                        </div>
+                        <p class="mt-0.5 text-sm text-gray-400">inclusief btw</p>
+                      </div>
+                      <!-- checkout button -->
+                      <div class="mt-auto flex flex-col gap-2 pt-4">
+                        <div class="">
+                          <a href="#" class="flex items-center justify-center rounded-md border border-transparent bg-neutral-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-900">Ik wil bestellen</a>
+                        </div>
+                        <div class="flex justify-center text-center text-sm text-gray-500">
+                          <p>
+                            of <button type="button" class="font-medium text-neutral-600 hover:text-neutral-500">Doorgaan met winkelen<span aria-hidden="true"> &rarr;</span></button>
+                          </p>
+                        </div>
                       </div>
                     </div>
-
-                    <!-- Input Apellido Paterno -->
-                    <div class="mb-4">
-                      <label class="mb-2.5 block font-medium text-black dark:text-white">Apellido Paterno</label>
-                      <div class="relative">
-                        <input type="text" id="apellidoPaterno" name="apellidoPaterno" x-model="apellidoPaterno"
-                          required
-                          class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" />
-
-                        <span class="absolute right-4 top-4">
-                          <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g opacity="0.5">
-                              <path
-                                d="M11.0008 9.52185C13.5445 9.52185 15.607 7.5281 15.607 5.0531C15.607 2.5781 13.5445 0.584351 11.0008 0.584351C8.45703 0.584351 6.39453 2.5781 6.39453 5.0531C6.39453 7.5281 8.45703 9.52185 11.0008 9.52185ZM11.0008 2.1656C12.6852 2.1656 14.0602 3.47185 14.0602 5.08748C14.0602 6.7031 12.6852 8.00935 11.0008 8.00935C9.31641 8.00935 7.94141 6.7031 7.94141 5.08748C7.94141 3.47185 9.31641 2.1656 11.0008 2.1656Z"
-                                fill="" />
-                              <path
-                                d="M13.2352 11.0687H8.76641C5.08828 11.0687 2.09766 14.0937 2.09766 17.7719V20.625C2.09766 21.0375 2.44141 21.4156 2.88828 21.4156C3.33516 21.4156 3.67891 21.0719 3.67891 20.625V17.7719C3.67891 14.9531 5.98203 12.6156 8.83516 12.6156H13.2695C16.0883 12.6156 18.4258 14.9187 18.4258 17.7719V20.625C18.4258 21.0375 18.7695 21.4156 19.2164 21.4156C19.6633 21.4156 20.007 21.0719 20.007 20.625V17.7719C19.9039 14.0937 16.9133 11.0687 13.2352 11.0687Z"
-                                fill="" />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-
-
-                    <!-- Input Apellido Materno -->
-                    <div class="mb-4">
-                      <label class="mb-2.5 block font-medium text-black dark:text-white">Apellido Materno</label>
-                      <div class="relative">
-                        <input type="text" id="apellidoMaterno" name="apellidoMaterno" x-model="apellidoMaterno"
-                          required
-                          class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" />
-
-                        <span class="absolute right-4 top-4">
-                          <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g opacity="0.5">
-                              <path
-                                d="M11.0008 9.52185C13.5445 9.52185 15.607 7.5281 15.607 5.0531C15.607 2.5781 13.5445 0.584351 11.0008 0.584351C8.45703 0.584351 6.39453 2.5781 6.39453 5.0531C6.39453 7.5281 8.45703 9.52185 11.0008 9.52185ZM11.0008 2.1656C12.6852 2.1656 14.0602 3.47185 14.0602 5.08748C14.0602 6.7031 12.6852 8.00935 11.0008 8.00935C9.31641 8.00935 7.94141 6.7031 7.94141 5.08748C7.94141 3.47185 9.31641 2.1656 11.0008 2.1656Z"
-                                fill="" />
-                              <path
-                                d="M13.2352 11.0687H8.76641C5.08828 11.0687 2.09766 14.0937 2.09766 17.7719V20.625C2.09766 21.0375 2.44141 21.4156 2.88828 21.4156C3.33516 21.4156 3.67891 21.0719 3.67891 20.625V17.7719C3.67891 14.9531 5.98203 12.6156 8.83516 12.6156H13.2695C16.0883 12.6156 18.4258 14.9187 18.4258 17.7719V20.625C18.4258 21.0375 18.7695 21.4156 19.2164 21.4156C19.6633 21.4156 20.007 21.0719 20.007 20.625V17.7719C19.9039 14.0937 16.9133 11.0687 13.2352 11.0687Z"
-                                fill="" />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-
-                    <!-- Input Número de Telefono -->
-                    <div class="mb-4">
-                      <label class="mb-2.5 block font-medium text-black dark:text-white">Número de Telefono</label>
-                      <div class="relative">
-                        <input type="text" id="nTelefono" x-model="nTelefono" name="nTelefono" required
-                          class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" />
-
-                        <span class="absolute right-3 top-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 24 24"
-                            style="fill: rgb(117, 130, 144)">
-                            <g opacity="0.5">
-                              <path
-                                d="M17.707 12.293a.999.999 0 0 0-1.414 0l-1.594 1.594c-.739-.22-2.118-.72-2.992-1.594s-1.374-2.253-1.594-2.992l1.594-1.594a.999.999 0 0 0 0-1.414l-4-4a.999.999 0 0 0-1.414 0L3.581 5.005c-.38.38-.594.902-.586 1.435.023 1.424.4 6.37 4.298 10.268s8.844 4.274 10.269 4.298h.028c.528 0 1.027-.208 1.405-.586l2.712-2.712a.999.999 0 0 0 0-1.414l-4-4.001zm-.127 6.712c-1.248-.021-5.518-.356-8.873-3.712-3.366-3.366-3.692-7.651-3.712-8.874L7 4.414 9.586 7 8.293 8.293a1 1 0 0 0-.272.912c.024.115.611 2.842 2.271 4.502s4.387 2.247 4.502 2.271a.991.991 0 0 0 .912-.271L17 14.414 19.586 17l-2.006 2.005z">
-                              </path>
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-
-
+                  </div>
                 </div>
               </div>
-
-              <div class="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-                <div class="w-full p-4 sm:p-12.5 xl:p-17.5">
-
-
-
-                  <!-- Input Nombre de la Empresa -->
-                  <div class="mb-4">
-                    <label class="mb-2.5 block font-medium text-black dark:text-white">Nombre de la Empresa</label>
-                    <div class="relative">
-                      <input type="text" id="empresa" name="empresa" x-model="empresa" required
-                        class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" />
-
-                      <span class="absolute right-4 top-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 24 24"
-                          style="fill: rgb(117, 130, 144)">
-                          <g opacity="0.5">
-                            <path
-                              d="M19 2H9c-1.103 0-2 .897-2 2v6H5c-1.103 0-2 .897-2 2v9a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4c0-1.103-.897-2-2-2zM5 12h6v8H5v-8zm14 8h-6v-8c0-1.103-.897-2-2-2H9V4h10v16z">
-
-                            </path>
-                            <path d="M11 6h2v2h-2zm4 0h2v2h-2zm0 4.031h2V12h-2zM15 14h2v2h-2zm-8 .001h2v2H7z"></path>
-                          </g>
-                        </svg>
-
-
-                      </span>
-                    </div>
-                  </div>
-
-                  <!-- Input RFC -->
-                  <div class="mb-4">
-                    <label class="mb-2.5 block font-medium text-black dark:text-white">RFC de la Empresa</label>
-                    <div class="relative">
-                      <input type="text" name="rfc" id="rfc" x-model="rfc" required
-                        class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" />
-
-                      <span class="absolute right-4 top-4">
-                        <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.5">
-                            <path
-                              d="M11.0008 9.52185C13.5445 9.52185 15.607 7.5281 15.607 5.0531C15.607 2.5781 13.5445 0.584351 11.0008 0.584351C8.45703 0.584351 6.39453 2.5781 6.39453 5.0531C6.39453 7.5281 8.45703 9.52185 11.0008 9.52185ZM11.0008 2.1656C12.6852 2.1656 14.0602 3.47185 14.0602 5.08748C14.0602 6.7031 12.6852 8.00935 11.0008 8.00935C9.31641 8.00935 7.94141 6.7031 7.94141 5.08748C7.94141 3.47185 9.31641 2.1656 11.0008 2.1656Z"
-                              fill="" />
-                            <path
-                              d="M13.2352 11.0687H8.76641C5.08828 11.0687 2.09766 14.0937 2.09766 17.7719V20.625C2.09766 21.0375 2.44141 21.4156 2.88828 21.4156C3.33516 21.4156 3.67891 21.0719 3.67891 20.625V17.7719C3.67891 14.9531 5.98203 12.6156 8.83516 12.6156H13.2695C16.0883 12.6156 18.4258 14.9187 18.4258 17.7719V20.625C18.4258 21.0375 18.7695 21.4156 19.2164 21.4156C19.6633 21.4156 20.007 21.0719 20.007 20.625V17.7719C19.9039 14.0937 16.9133 11.0687 13.2352 11.0687Z"
-                              fill="" />
-                          </g>
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-
-                  <!-- Input Correo Electronico -->
-                  <div class="mb-4">
-                    <label class="mb-2.5 block font-medium text-black dark:text-white">Correo Electronico</label>
-                    <div class="relative">
-                      <input type="email" name="email" id="email" x-model="email" required
-                        placeholder="Ingresa tu Correo Electronico"
-                        class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" />
-
-                      <span class="absolute right-4 top-4">
-                        <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.5">
-                            <path
-                              d="M19.2516 3.30005H2.75156C1.58281 3.30005 0.585938 4.26255 0.585938 5.46567V16.6032C0.585938 17.7719 1.54844 18.7688 2.75156 18.7688H19.2516C20.4203 18.7688 21.4172 17.8063 21.4172 16.6032V5.4313C21.4172 4.26255 20.4203 3.30005 19.2516 3.30005ZM19.2516 4.84692C19.2859 4.84692 19.3203 4.84692 19.3547 4.84692L11.0016 10.2094L2.64844 4.84692C2.68281 4.84692 2.71719 4.84692 2.75156 4.84692H19.2516ZM19.2516 17.1532H2.75156C2.40781 17.1532 2.13281 16.8782 2.13281 16.5344V6.35942L10.1766 11.5157C10.4172 11.6875 10.6922 11.7563 10.9672 11.7563C11.2422 11.7563 11.5172 11.6875 11.7578 11.5157L19.8016 6.35942V16.5688C19.8703 16.9125 19.5953 17.1532 19.2516 17.1532Z"
-                              fill="" />
-                          </g>
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-
-
-                  <!-- Input Contraseña -->
-                  <div class="mb-4">
-                    <label class="mb-2.5 block font-medium text-black dark:text-white">Contraseña</label>
-                    <div class="relative">
-                      <input type="password" id="password" name="password" placeholder="Ingresa tu Contraseña"
-                        x-model="password" required
-                        class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" />
-
-                      <span class="absolute right-4 top-4">
-                        <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.5">
-                            <path
-                              d="M16.1547 6.80626V5.91251C16.1547 3.16251 14.0922 0.825009 11.4797 0.618759C10.0359 0.481259 8.59219 0.996884 7.52656 1.95938C6.46094 2.92188 5.84219 4.29688 5.84219 5.70626V6.80626C3.84844 7.18438 2.33594 8.93751 2.33594 11.0688V17.2906C2.33594 19.5594 4.19219 21.3813 6.42656 21.3813H15.5016C17.7703 21.3813 19.6266 19.525 19.6266 17.2563V11C19.6609 8.93751 18.1484 7.21876 16.1547 6.80626ZM8.55781 3.09376C9.31406 2.40626 10.3109 2.06251 11.3422 2.16563C13.1641 2.33751 14.6078 3.98751 14.6078 5.91251V6.70313H7.38906V5.67188C7.38906 4.70938 7.80156 3.78126 8.55781 3.09376ZM18.1141 17.2906C18.1141 18.7 16.9453 19.8688 15.5359 19.8688H6.46094C5.05156 19.8688 3.91719 18.7344 3.91719 17.325V11.0688C3.91719 9.52189 5.15469 8.28438 6.70156 8.28438H15.2953C16.8422 8.28438 18.1141 9.52188 18.1141 11V17.2906Z"
-                              fill="" />
-                            <path
-                              d="M10.9977 11.8594C10.5852 11.8594 10.207 12.2031 10.207 12.65V16.2594C10.207 16.6719 10.5508 17.05 10.9977 17.05C11.4102 17.05 11.7883 16.7063 11.7883 16.2594V12.6156C11.7883 12.2031 11.4102 11.8594 10.9977 11.8594Z"
-                              fill="" />
-                          </g>
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-
-                  <!-- Input Enviar -->
-                  <div class="mb-5 mt-12">
-                    <input type="submit" value="Crear Cuenta"
-                      class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90" />
-                  </div>
-
-                  <!-- Link Inicio de sesion -->
-                  <div class="mt-6 text-center">
-                    <p class="font-medium">
-                      ¿Ya tienes una Cuenta?
-                      <a href="signin.html" class="text-primary">Iniciar Sesión</a>
-                    </p>
-                  </div>
-
-                  <div class="mt-6 text-center">
-                    <p class="font-medium">
-                      ¿Tienes un Código de Invitación?
-                      <a href="signupCodigo.html" class="text-primary">Registrarse con Código</a>
-                    </p>
-                  </div>
-
-                  </form>
-                </div>
-              </div>
-            </div>
+            <!-- ====== Settings Section End -->
           </div>
-          <!-- ====== Forms Section End -->
         </div>
       </main>
       <!-- ===== Main Content End ===== -->
@@ -1247,59 +1167,62 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <!-- ===== Page Wrapper End ===== -->
+
   <script>
-    function manejoRegistro() {
+    function dropdown() {
       return {
-        email: '',
-        password: '',
-        nombre: '',
-        apellidoPaterno: '',
-        apellidoMaterno: '',
-        nTelefono: '',
-        empresa: '',
-        rfc: '',
-        rol: '',
-        submitForm() {
-          const datosRegistro = {
-            email: this.email,
-            password: this.password,
-            nombre: this.nombre,
-            apellidoPaterno: this.apellidoPaterno,
-            apellidoMaterno: this.apellidoMaterno,
-            nTelefono: this.nTelefono,
-            empresa: this.empresa,
-            rfc: this.rfc,
-            rol: 'contratante'
-          };
-
-          fetch('http://localhost/SWAP-MEXIBUS/server/registro.php', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(datosRegistro),
-          })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Error en el registro');
-              }
-              return response.text(); // Primero obtenemos el texto
-            })
-            .then(text => {
-              // Luego intentamos analizar el texto como JSON
-              try {
-                return JSON.parse(text);
-              } catch (e) {
-                throw new Error('Respuesta no es JSON válido: ' + text);
-              }
-            })
-        }
-      }
+        options: [],
+        selected: [],
+        show: false,
+        open() {
+          this.show = true;
+        },
+        close() {
+          this.show = false;
+        },
+        isOpen() {
+          return this.show === true;
+        },
+        select(index, event) {
+          if (!this.options[index].selected) {
+            this.options[index].selected = true;
+            this.options[index].element = event.target;
+            this.selected.push(index);
+          } else {
+            this.selected.splice(this.selected.lastIndexOf(index), 1);
+            this.options[index].selected = false;
+          }
+        },
+        remove(index, option) {
+          this.options[option].selected = false;
+          this.selected.splice(index, 1);
+        },
+        loadOptions() {
+          const options = document.getElementById("select").options;
+          for (let i = 0; i < options.length; i++) {
+            this.options.push({
+              value: options[i].value,
+              text: options[i].innerText,
+              selected:
+                options[i].getAttribute("selected") != null
+                  ? options[i].getAttribute("selected")
+                  : false,
+            });
+          }
+        },
+        selectedValues() {
+          return this.selected.map((option) => {
+            return this.options[option].value;
+          });
+        },
+        isVisible(value) {
+          if (this.selected.length === 0) return false;
+          const selectedValues = this.selectedValues().map(String);
+          return selectedValues.includes(value);
+        },
+      };
     }
-
   </script>
-
-
 <script defer src="bundle.js"></script></body>
 
 </html>
