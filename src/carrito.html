@@ -9,7 +9,6 @@
 </head>
 
 <body
-
   x-data="{ page: 'carrito', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
   x-init="
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
@@ -42,176 +41,178 @@
           <div class="mx-auto max-w-270">
             <!-- Breadcrumb Start -->
             <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <h2 class="text-title-md2 font-bold text-black dark:text-white">
-                  Finaliza tu Compra
-                </h2>
-    
-                <nav>
-                  <ol class="flex items-center gap-2">
-                    <li>
-                      <a class="font-medium" href="index.html">Inicio /</a>
+              <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                Finaliza tu Compra
+              </h2>
+
+              <nav>
+                <ol class="flex items-center gap-2">
+                  <li>
+                    <a class="font-medium" href="index.html">Inicio /</a>
+                  </li>
+                  <li class="font-medium text-primary">Carrito</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="container mx-auto my-12" x-data="carrito()" x-init="cargarCarrito()">
+              <div class="flex flex-col gap-6 md:flex-row">
+                <div
+                  class="flex-1 shrink-0 rounded-sm border border-neutral-200 bg-white px-4 py-8 shadow-sm  dark:bg-boxdark ">
+                  <div class="mb-8">
+                    <h3 class="text-2xl text-black font-bold dark:text-white ">Resúmen de tu Compra</h3>
+                    <p>Revisa tus Productos Añadidos</p>
+                  </div>
+                  <ul role="list" class="-my-6 divide-y divide-neutral-200">
+                    <!-- product item 1 -->
+
+                    <li class="flex py-6">
+                      <!-- <div class="h-32 w-24 flex-shrink-0 overflow-hidden rounded-sm border bg-neutral-50">
+                          <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center" />
+                        </div> -->
+
+                      <div class="ml-4 flex flex-1 flex-col">
+                        <ul role="list" class="-my-6 divide-y divide-neutral-200">
+                          <template x-for="item in items" :key="item.id">
+                            <li>
+                              <div>
+                                <div class="flex justify-between text-sm text-gray-900">
+                                  <h3 class="text-base font-bold"><a href="#"> </a></h3>
+                                  <button type="button"
+                                    class="flex gap-2 font-medium text-neutral-400 mt-2 hover:text-neutral-900">
+                                    <p class="text-m font-normal text-black dark:text-white ">Eliminar</p>
+                                    <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg">
+                                      <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                      </path>
+                                    </svg>
+                                  </button>
+                                </div>
+                                <div class="mt-2">
+                                  <p class="text-l text-neutral-400" x-text="`Estación:  ${item.nombre_estacion}`"></p>
+                                  <p class="text-l text-neutral-400" x-text="`Ubicación:  ${item.ubicacion}`"></p>
+                                  <p class="text-l text-neutral-400" x-text="`Lado:  ${item.lado}`"></p>
+                                  <p class="text-l text-neutral-400">Orientación: Sur</p>
+                                </div>
+                              </div>
+
+                              <div class="mt-auto flex flex-1 items-end justify-between text-sm">
+                                <div>
+                                  <label for="quantity" class="sr-only">aantal</label>
+                                  <select id="location" name="location"
+                                    class="mt-1 block border-gray-500 py-2 pl-3 pr-10 text-base focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm dark:bg-boxdark dark:text-white">
+                                    <option>1</option>
+                                    <option selected>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>22</option>
+                                  </select>
+                                </div>
+
+                                <div class="flex">
+                                  <div class="text-right">
+                                    <p class="text-m text-neutral-400" x-text="`Precio:  ${item.precio_unitario}`"></p>
+                                    <p class="text-sm font-bold text-orange-600"></p>
+
+                                    <!-- <div class="mt-1 flex flex-row items-center gap-2">
+                                      <svg class="h-3 w-3 rotate-90 stroke-2 text-orange-700" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                                        </path>
+                                      </svg>
+                                      <p class="text-xs font-normal text-neutral-400">Titel van korting</p>
+                                    </div> -->
+                                  </div>
+                                </div>
+                              </div>
+
+                            </li>
+
+                          </template>
+                        </ul>
+
+                      </div>
                     </li>
-                    <li class="font-medium text-primary">Carrito</li>
-                  </ol>
-                </nav>
-              </div>
-            <div class="container mx-auto my-12">
-                <div class="flex flex-col gap-6 md:flex-row">
-                  <div class="flex-1 shrink-0 rounded-sm border border-neutral-200 bg-white px-4 py-8 shadow-sm  dark:bg-boxdark ">
-                    <div class="mb-8">
-                      <h3 class="text-2xl text-black font-bold dark:text-white ">Resúmen de tu Compra</h3>
-                      <p>Welkom in jouw Winkelwagen</p>
-                    </div>
-                    <ul role="list" class="-my-6 divide-y divide-neutral-200">
-                      <!-- product item 1 -->
-            
-                      <li class="flex py-6">
-                        <div class="h-32 w-24 flex-shrink-0 overflow-hidden rounded-sm border bg-neutral-50">
-                          <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center" />
-                        </div>
-            
-                        <div class="ml-4 flex flex-1 flex-col">
+
+
+
+                  </ul>
+                </div>
+
+                <!-- Totaalprijs -->
+
+                <div
+                  class="sticky space-y-4 rounded-sm border border-neutral-200 bg-white py-6 px-4 shadow-sm sm:px-6 md:w-1/3 dark:bg-boxdark">
+                  <!-- pricing totals -->
+
+                  <h4 class="text-2xl font-bold">Total a Pagar</h4>
+                  <ul role="list">
+                    <template x-for="item in items" :key="item.id">
+                      <li>
+                        <div class="flex flex-col gap-2">
+                          <div class="flex justify-between text-base text-gray-900">
+                            <p>Subtotal</p>
+                            <p x-text="` $ ${item.precio_unitario}`"></p>
+                          </div>
+                          <div class="flex justify-between text-base text-gray-900">
+                            <p>IVA 16%</p>
+                            <p  x-text="` $ ${item.iva}`"></p>
+                          </div>
+                         
+                          <div class="flex justify-between text-base text-gray-900">
+                            <p>Precio Final</p>
+                            <p x-text="` $ ${item.precio_final}`"></p>
+                          </div>
+                          <!-- <div class="flex flex-row items-center justify-end gap-2">
+                            <svg class="h-4 w-4 rotate-90 stroke-2 text-orange-600" fill="none" stroke="currentColor"
+                              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                              </path>
+                            </svg>
+                            <p class="text-xs font-normal text-neutral-400">Titel van de korting</p>
+                          </div>
+                          <div class="flex flex-row items-center justify-end gap-2">
+                            <svg class="h-4 w-4 rotate-90 stroke-2 text-orange-600" fill="none" stroke="currentColor"
+                              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                              </path>
+                            </svg>
+                            <p class="text-xs font-normal text-neutral-400">Extra korting</p>
+                          </div> -->
                           <div>
-                            <div class="flex justify-between text-sm text-gray-900">
-                              <h3 class="text-base font-bold"><a href="#">  </a></h3>
-                              <button type="button" class="flex gap-2 font-medium text-neutral-400 hover:text-neutral-900">
-                                <p class="text-xs font-normal text-black dark:text-white ">Eliminar</p>
-                                <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                              </button>
-                            </div>
-                            <div class="mt-2">
-                              <p class="text-xs text-neutral-400">Linea: Linea 1</p>
-                              <p class="text-xs text-neutral-400">Estación: Tecamac</p>
-                              <p class="text-xs text-neutral-400">Ubicación: Externa</p>
-                              <p class="text-xs text-neutral-400">Orientación: Sur</p>
+                            <div class="my-2 w-full border-t border-gray-300"></div>
+                            <div class="flex justify-between text-base font-bold text-gray-900">
+                              <p>Total</p>
+                              <p></p>
                             </div>
                           </div>
-                          <div class="mt-auto flex flex-1 items-end justify-between text-sm">
-                            <div>
-                              <label for="quantity" class="sr-only">aantal</label>
-                              <select id="location" name="location" class="mt-1 block border-gray-500 py-2 pl-3 pr-10 text-base focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm dark:bg-boxdark dark:text-white">
-                                <option>1</option>
-                                <option selected>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>22</option>
-                              </select>
+                          <!-- checkout button -->
+                          <div class="mt-auto flex flex-col gap-2 pt-4">
+                            <div class="">
+                              <a href="#"
+                                class="flex items-center justify-center rounded-md border border-transparent bg-neutral-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-900">Finalizar Compra</a>
                             </div>
-            
-                            <div class="flex">
-                              <div class="text-right">
-                                <p class="text-sm font-bold text-orange-600">90.00</p>
-                                <p class="text-xs text-gray-500">Origineel: <span class="text-sm font-bold line-through">€ 299,85 </span></p>
-                                <div class="mt-1 flex flex-row items-center gap-2">
-                                  <svg class="h-3 w-3 rotate-90 stroke-2 text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
-                                  <p class="text-xs font-normal text-neutral-400">Titel van korting</p>
-                                </div>
-                              </div>
+                            <div class="flex justify-center text-center text-sm text-gray-500">
+                              <p>
+                                of <button type="button"
+                                  class="font-medium text-neutral-600 hover:text-neutral-500">Seguir Explorando<span aria-hidden="true"> &rarr;</span></button>
+                              </p>
                             </div>
                           </div>
                         </div>
                       </li>
-            
-                      <!-- product item 2 -->
-                      <li class="flex py-6">
-                        <div class="h-32 w-24 flex-shrink-0 overflow-hidden rounded-sm border bg-neutral-50">
-                          <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center" />
-                        </div>
-            
-                        <div class="ml-4 flex flex-1 flex-col">
-                          <div>
-                            <div class="flex justify-between text-sm text-gray-900">
-                              <h3 class="text-base font-bold"><a href="#"> Throwback Hip Bag </a></h3>
-                              <button type="button" class="flex gap-2 font-medium text-neutral-400 hover:text-neutral-900">
-                                <p class="text-xs font-normal">Verwijderen</p>
-                                <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                              </button>
-                            </div>
-                            <div class="mt-2">
-                              <p class="text-xs text-neutral-400">property: een propertie op het product</p>
-                            </div>
-                          </div>
-                          <div class="mt-auto flex flex-1 items-end justify-between text-sm">
-                            <div>
-                              <label for="quantity" class="sr-only">aantal</label>
-                              <select id="location" name="location" class="mt-1 block border-gray-500 py-2 pl-3 pr-10 text-base focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm">
-                                <option>1</option>
-                                <option selected>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>22</option>
-                              </select>
-                            </div>
-            
-                            <div class="flex">
-                              <div class="text-right">
-                                <p class="text-sm font-bold text-orange-600">90.00</p>
-                                <p class="text-xs text-gray-500">Origineel: <span class="text-sm font-bold line-through">€ 299,85 </span></p>
-                                <div class="mt-1 flex flex-row items-center gap-2">
-                                  <svg class="h-3 w-3 rotate-90 stroke-2 text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
-                                  <p class="text-xs font-normal text-neutral-400">Titel van korting</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-            
-                  <!-- Totaalprijs -->
-            
-                  <div class="sticky space-y-4 rounded-sm border border-neutral-200 bg-white py-6 px-4 shadow-sm sm:px-6 md:w-1/3 dark:bg-boxdark">
-                    <!-- pricing totals -->
-                    <h4 class="text-2xl font-bold">Total a Pagar</h4>
-                    <div class="flex flex-col gap-2">
-                      <div class="flex justify-between text-base text-gray-900">
-                        <p>Sub Total</p>
-                        <p>262.00</p>
-                      </div>
-                      <div class="flex justify-between text-base text-gray-900">
-                        <p>IVA</p>
-                        <p>16%</p>
-                      </div>
-                      <div class="flex justify-between text-base text-gray-900">
-                        <p>BTW</p>
-                        <p>262.00</p>
-                      </div>
-                      <div class="flex justify-between text-base text-gray-900">
-                        <p>korting</p>
-                        <p>262.00</p>
-                      </div>
-                      <div class="flex flex-row items-center justify-end gap-2">
-                        <svg class="h-4 w-4 rotate-90 stroke-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
-                        <p class="text-xs font-normal text-neutral-400">Titel van de korting</p>
-                      </div>
-                      <div class="flex flex-row items-center justify-end gap-2">
-                        <svg class="h-4 w-4 rotate-90 stroke-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
-                        <p class="text-xs font-normal text-neutral-400">Extra korting</p>
-                      </div>
-                      <div>
-                        <div class="my-2 w-full border-t border-gray-300"></div>
-                        <div class="flex justify-between text-base font-bold text-gray-900">
-                          <p>Totaal</p>
-                          <p>1200,-</p>
-                        </div>
-                        <p class="mt-0.5 text-sm text-gray-400">inclusief btw</p>
-                      </div>
-                      <!-- checkout button -->
-                      <div class="mt-auto flex flex-col gap-2 pt-4">
-                        <div class="">
-                          <a href="#" class="flex items-center justify-center rounded-md border border-transparent bg-neutral-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-900">Ik wil bestellen</a>
-                        </div>
-                        <div class="flex justify-center text-center text-sm text-gray-500">
-                          <p>
-                            of <button type="button" class="font-medium text-neutral-600 hover:text-neutral-500">Doorgaan met winkelen<span aria-hidden="true"> &rarr;</span></button>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    </template>
+                  </ul>
+
+
+
+
                 </div>
               </div>
+            </div>
             <!-- ====== Settings Section End -->
           </div>
         </div>
@@ -276,6 +277,41 @@
         },
       };
     }
+
+
+    document.addEventListener('alpine:init', () => {
+      console.log(localStorage.getItem('id'));
+      Alpine.data('carrito', () => ({
+        items: [],
+
+        cargarCarrito() {
+          fetch('http://localhost/SWAP-MEXIBUS/server/getCarrito.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id_contratante: localStorage.getItem('id'),
+            }),
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                this.items = data.items;
+                console.log(this.items);
+              } else {
+                const message = data.message || data.error || "Ocurrió un error inesperado.";
+                alert(message);
+              }
+            })
+            .catch(error => {
+              console.error('Error al cargar el carrito:', error);
+            });
+        },
+      }));
+    });
+
+
   </script>
 </body>
 

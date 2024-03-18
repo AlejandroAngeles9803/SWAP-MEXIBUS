@@ -16,6 +16,11 @@
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
   :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+  <script>
+    if (!localStorage.getItem('token')) {
+      window.location.href = '/singnin.html';
+    }
+  </script>
   <!-- ===== Preloader Start ===== -->
   <include src="./partials/preloader.html"></include>
   <!-- ===== Preloader End ===== -->
@@ -54,208 +59,12 @@
 
           <!-- ====== Form Elements Section Start -->
 
-          <div class="grid grid-cols-1 gap-9 sm:grid-cols-2" x-data="manejarCambio()">
+          <div class="grid grid-cols-1 gap-9 sm:grid-cols-1" x-data="dropdownHandler()">
+
+
             <div class="flex flex-col gap-9">
-              <!-- Input Fields 
-                <div
-                  class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
-                >
-                  <div
-                    class="border-b border-stroke px-6.5 py-4 dark:border-strokedark"
-                  >
-                    <h3 class="font-medium text-black dark:text-white">
-                      Input Fields
-                    </h3>
-                  </div>
-                  
-                  <div class="flex flex-col gap-5.5 p-6.5">
-                    <div>
-                      <label
-                        class="mb-3 block text-sm font-medium text-black dark:text-white"
-                      >
-                        Default Input
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Default Input"
-                        class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
-                    </div>
 
-                    <div>
-                      <label
-                        class="mb-3 block text-sm font-medium text-black dark:text-white"
-                      >
-                        Active Input
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Active Input"
-                        class="w-full rounded-lg border-[1.5px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        class="mb-3 block text-sm font-medium text-black dark:text-white"
-                      >
-                        Disabled label
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Disabled label"
-                        disabled=""
-                        class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary dark:disabled:bg-black"
-                      />
-                    </div>
-                  </div>
-                </div>
-                -->
-              <!-- Toggle switch input 
-                <div
-                  class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
-                >
-                  <div
-                    class="border-b border-stroke px-6.5 py-4 dark:border-strokedark"
-                  >
-                    <h3 class="font-medium text-black dark:text-white">
-                      Toggle switch input
-                    </h3>
-                  </div>
-                  <div class="flex flex-col gap-5.5 p-6.5">
-                    <div x-data="{ switcherToggle: false }">
-                      <label
-                        for="toggle1"
-                        class="flex cursor-pointer select-none items-center"
-                      >
-                        <div class="relative">
-                          <input
-                            type="checkbox"
-                            id="toggle1"
-                            class="sr-only"
-                            @change="switcherToggle = !switcherToggle"
-                          />
-                          <div
-                            class="block h-8 w-14 rounded-full bg-meta-9 dark:bg-[#5A616B]"
-                          ></div>
-                          <div
-                            :class="switcherToggle && '!right-1 !translate-x-full !bg-primary dark:!bg-white'"
-                            class="absolute left-1 top-1 h-6 w-6 rounded-full bg-white transition"
-                          ></div>
-                        </div>
-                      </label>
-                    </div>
-
-                    <div x-data="{ switcherToggle: false }">
-                      <label
-                        for="toggle2"
-                        class="flex cursor-pointer select-none items-center"
-                      >
-                        <div class="relative">
-                          <input
-                            id="toggle2"
-                            type="checkbox"
-                            class="sr-only"
-                            @change="switcherToggle = !switcherToggle"
-                          />
-                          <div
-                            class="h-5 w-14 rounded-full bg-meta-9 shadow-inner dark:bg-[#5A616B]"
-                          ></div>
-                          <div
-                            :class="switcherToggle && '!right-0 !translate-x-full !bg-primary dark:!bg-white'"
-                            class="dot absolute -top-1 left-0 h-7 w-7 rounded-full bg-white shadow-switch-1 transition"
-                          ></div>
-                        </div>
-                      </label>
-                    </div>
-
-                    <div x-data="{ switcherToggle: false }">
-                      <label
-                        for="toggle3"
-                        class="flex cursor-pointer select-none items-center"
-                      >
-                        <div class="relative">
-                          <input
-                            type="checkbox"
-                            id="toggle3"
-                            class="sr-only"
-                            @change="switcherToggle = !switcherToggle"
-                          />
-                          <div
-                            class="block h-8 w-14 rounded-full bg-meta-9 dark:bg-[#5A616B]"
-                          ></div>
-                          <div
-                            :class="switcherToggle && '!right-1 !translate-x-full !bg-primary dark:!bg-white'"
-                            class="dot absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition"
-                          >
-                            <span
-                              :class="switcherToggle && '!block'"
-                              class="hidden text-white dark:text-bodydark"
-                            >
-                              <svg
-                                class="fill-current stroke-current"
-                                width="11"
-                                height="8"
-                                viewBox="0 0 11 8"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M10.0915 0.951972L10.0867 0.946075L10.0813 0.940568C9.90076 0.753564 9.61034 0.753146 9.42927 0.939309L4.16201 6.22962L1.58507 3.63469C1.40401 3.44841 1.11351 3.44879 0.932892 3.63584C0.755703 3.81933 0.755703 4.10875 0.932892 4.29224L0.932878 4.29225L0.934851 4.29424L3.58046 6.95832C3.73676 7.11955 3.94983 7.2 4.1473 7.2C4.36196 7.2 4.55963 7.11773 4.71406 6.9584L10.0468 1.60234C10.2436 1.4199 10.2421 1.1339 10.0915 0.951972ZM4.2327 6.30081L4.2317 6.2998C4.23206 6.30015 4.23237 6.30049 4.23269 6.30082L4.2327 6.30081Z"
-                                  fill=""
-                                  stroke=""
-                                  stroke-width="0.4"
-                                ></path>
-                              </svg>
-                            </span>
-                            <span :class="switcherToggle && 'hidden'">
-                              <svg
-                                class="h-4 w-4 stroke-current"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M6 18L18 6M6 6l12 12"
-                                ></path>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </label>
-                    </div>
-
-                    <div x-data="{ switcherToggle: false }">
-                      <label
-                        for="toggle4"
-                        class="flex cursor-pointer select-none items-center"
-                      >
-                        <div class="relative">
-                          <input
-                            type="checkbox"
-                            id="toggle4"
-                            class="sr-only"
-                            @change="switcherToggle = !switcherToggle"
-                          />
-                          <div
-                            :class="switcherToggle && '!bg-primary'"
-                            class="block h-8 w-14 rounded-full bg-black"
-                          ></div>
-                          <div
-                            :class="switcherToggle && '!right-1 !translate-x-full'"
-                            class="absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition"
-                          ></div>
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                -->
-
-
+              <!-- Seleccionar Estacion -->
               <div
                 class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -265,7 +74,7 @@
                 </div>
 
 
-                <div x-data="dropdownHandler()" class="flex flex-col gap-5.5 p-6.5">
+                <div class="flex flex-col gap-5.5 p-6.5">
                   <div>
                     <label class="mb-3 block text-sm font-medium text-black dark:text-white">
                       Selecciona línea del Mexibus
@@ -274,13 +83,13 @@
 
                       <select
                         class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                        :class="'text-black dark:text-white'" @change="updateStations($event.target.value)">
-                        <option value="">Seleccione una línea</option>
-                        <option value="1" class="text-body">Línea 1</option>
-                        <option value="2" class="text-body">Línea 2</option>
-                        <option value="3" class="text-body">Línea 3</option>
-                        <option value="4" class="text-body">Línea 4</option>
+                        :class="'text-black dark:text-white'" x-model="selectedLinea" @change="updateStations()">
+                        <option value="">Seleccione una linea</option>
+                        <template x-for="linea in lineasUnicas" :key="linea">
+                          <option :value="linea" x-text="`Línea ${linea}`"></option>
+                        </template>
                       </select>
+
                       <span class="absolute right-4 top-1/2 z-10 -translate-y-1/2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <g opacity="0.8">
@@ -292,9 +101,6 @@
                       </span>
                     </div>
                   </div>
-
-
-
 
                   <!-- Input Estación -->
                   <div>
@@ -321,10 +127,11 @@
 
                       <select
                         class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-12 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                        :class="'text-black dark:text-white'" x-model="selectedStation">
+                        :class="'text-black dark:text-white'" x-model="selectedStation" @change="updateEspacios()">
 
-                        <template x-for="station in stations" :key="station">
-                          <option x-text="station" :value="station"></option>
+                        <option value="">Seleccione una estación</option>
+                        <template x-for="estacion in estacionesFiltradas" :key="estacion.nombre_estacion">
+                          <option :value="estacion.nombre_estacion" x-text="estacion.nombre_estacion"></option>
                         </template>
                       </select>
 
@@ -342,897 +149,219 @@
 
                   </div>
 
-                  <!-- <div>
-                    <label
-                       class="mb-3 block text-sm font-medium text-black dark:text-white"
-                     >
-                       Multiselect Dropdown
-                     </label>
-
-                     <div class="">
-                       <select class="hidden" x-cloak id="select">
-                         <option value="1">Option 2</option>
-                         <option value="2">Option 3</option>
-                         <option value="3">Option 4</option>
-                         <option value="4">Option 5</option>
-                       </select>
-
-                       <div
-                         x-data="dropdown()"
-                         x-init="loadOptions()"
-                         class="flex flex-col items-center"
-                       >
-                         <input
-                           name="values"
-                           type="hidden"
-                           :value="selectedValues()"
-                         />
-                         <div class="relative z-20 inline-block w-full">
-                           <div class="relative flex flex-col items-center">
-                             <div @click="open" class="w-full">
-                               <div
-                                 class="mb-2 flex rounded border border-stroke py-2 pl-3 pr-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                               >
-                                 <div class="flex flex-auto flex-wrap gap-3">
-                                   <template
-                                     x-for="(option,index) in selected"
-                                     :key="index"
-                                   >
-                                     <div
-                                       class="my-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray px-2.5 py-1.5 text-sm font-medium dark:border-strokedark dark:bg-white/30"
-                                     >
-                                       <div
-                                         class="max-w-full flex-initial"
-                                         x-model="options[option]"
-                                         x-text="options[option].text"
-                                       ></div>
-                                       <div
-                                         class="flex flex-auto flex-row-reverse"
-                                       >
-                                         <div
-                                           @click="remove(index,option)"
-                                           class="cursor-pointer pl-2 hover:text-danger"
-                                         >
-                                           <svg
-                                             class="fill-current"
-                                             role="button"
-                                             width="12"
-                                             height="12"
-                                             viewBox="0 0 12 12"
-                                             fill="none"
-                                             xmlns="http://www.w3.org/2000/svg"
-                                           >
-                                             <path
-                                               fill-rule="evenodd"
-                                               clip-rule="evenodd"
-                                               d="M9.35355 3.35355C9.54882 3.15829 9.54882 2.84171 9.35355 2.64645C9.15829 2.45118 8.84171 2.45118 8.64645 2.64645L6 5.29289L3.35355 2.64645C3.15829 2.45118 2.84171 2.45118 2.64645 2.64645C2.45118 2.84171 2.45118 3.15829 2.64645 3.35355L5.29289 6L2.64645 8.64645C2.45118 8.84171 2.45118 9.15829 2.64645 9.35355C2.84171 9.54882 3.15829 9.54882 3.35355 9.35355L6 6.70711L8.64645 9.35355C8.84171 9.54882 9.15829 9.54882 9.35355 9.35355C9.54882 9.15829 9.54882 8.84171 9.35355 8.64645L6.70711 6L9.35355 3.35355Z"
-                                               fill="currentColor"
-                                             ></path>
-                                           </svg>
-                                         </div>
-                                       </div>
-                                     </div>
-                                   </template>
-                                   <div
-                                     x-show="selected.length == 0"
-                                     class="flex-1"
-                                   >
-                                     <input
-                                       placeholder="Select a option"
-                                       class="h-full w-full appearance-none bg-transparent p-1 px-2 outline-none"
-                                       :value="selectedValues()"
-                                     />
-                                   </div>
-                                 </div>
-                                 <div
-                                   class="flex w-8 items-center py-1 pl-1 pr-1"
-                                 >
-                                   <button
-                                     type="button"
-                                     @click="open"
-                                     class="h-6 w-6 cursor-pointer outline-none focus:outline-none"
-                                     :class="isOpen() === true ? 'rotate-180' : ''"
-                                   >
-                                     <svg
-                                       width="24"
-                                       height="24"
-                                       viewBox="0 0 24 24"
-                                       fill="none"
-                                       xmlns="http://www.w3.org/2000/svg"
-                                     >
-                                       <g opacity="0.8">
-                                         <path
-                                           fill-rule="evenodd"
-                                           clip-rule="evenodd"
-                                           d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                                           fill="#637381"
-                                         ></path>
-                                       </g>
-                                     </svg>
-                                   </button>
-                                 </div>
-                               </div>
-                             </div>
-                             <div class="w-full px-4">
-                               <div
-                                 x-show.transition.origin.top="isOpen()"
-                                 class="max-h-select absolute top-full left-0 z-40 w-full overflow-y-auto rounded bg-white shadow dark:bg-form-input"
-                                 @click.outside="close"
-                               >
-                                 <div class="flex w-full flex-col">
-                                   <template
-                                     x-for="(option,index) in options"
-                                     :key="index"
-                                   >
-                                     <div>
-                                       <div
-                                         class="w-full cursor-pointer rounded-t border-b border-stroke hover:bg-primary/5 dark:border-form-strokedark"
-                                         @click="select(index,$event)"
-                                       >
-                                         <div
-                                           :class="option.selected ? 'border-primary' : ''"
-                                           class="relative flex w-full items-center border-l-2 border-transparent p-2 pl-2"
-                                         >
-                                           <div
-                                             class="flex w-full items-center"
-                                           >
-                                             <div
-                                               class="mx-2 leading-6"
-                                               x-model="option"
-                                               x-text="option.text"
-                                             ></div>
-                                           </div>
-                                         </div>
-                                       </div>
-                                     </div>
-                                   </template>
-                                 </div>
-                               </div>
-                             </div>
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-                   </div> -->
-
-                  <!-- Input Ubicacion -->
-                  <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                      Selecciona la Ubicación
-                    </label>
-                    <div class="relative z-20 bg-white dark:bg-form-input">
-
-                      <select
-                        class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                        :class="'text-black dark:text-white'" @change="actualizarOpc($event.target.value)">
-                        <option value="">Seleccione una Ubicación</option>
-                        <option value="1" class="text-body">Externa</option>
-                        <option value="2" class="text-body">Interna</option>
-                      </select>
-                      <span class="absolute right-4 top-1/2 z-10 -translate-y-1/2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.8">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                              fill="#637381"></path>
-                          </g>
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-
-                  <!-- Input Lado -->
-                  <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                      Selecciona el Lado
-                    </label>
-                    <div class="relative z-20 bg-white dark:bg-form-input">
-
-                      <select
-                        class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                        :class="'text-black dark:text-white'">
-                        <option value="">Seleccione el Lado</option>
-                        <option value="1" class="text-body">Izquierdo</option>
-                        <option value="3" class="text-body">Derecho</option>
-                      </select>
-                      <span class="absolute right-4 top-1/2 z-10 -translate-y-1/2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.8">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                              fill="#637381"></path>
-                          </g>
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-
 
                 </div>
               </div>
 
 
 
-              <!-- Time and date -->
-              <div
-                class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div class="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                  <h3 class="font-medium text-black dark:text-white">
-                    Tiempo de Contratación
-                  </h3>
-                </div>
-                <div class="flex flex-col gap-5.5 p-6.5">
-                  <div >
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                      Fecha de Inicio
-                    </label>
-                    <div class="relative">
-                      <input  id="fechaInicio"  
-                        class="form-datepicker w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                        placeholder="mm/dd/yyyy" data-class="flatpickr-right"  />
 
-                      <div class="pointer-events-none absolute inset-0 left-auto right-5 flex items-center">
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M15.7504 2.9812H14.2879V2.36245C14.2879 2.02495 14.0066 1.71558 13.641 1.71558C13.2754 1.71558 12.9941 1.99683 12.9941 2.36245V2.9812H4.97852V2.36245C4.97852 2.02495 4.69727 1.71558 4.33164 1.71558C3.96602 1.71558 3.68477 1.99683 3.68477 2.36245V2.9812H2.25039C1.29414 2.9812 0.478516 3.7687 0.478516 4.75308V14.5406C0.478516 15.4968 1.26602 16.3125 2.25039 16.3125H15.7504C16.7066 16.3125 17.5223 15.525 17.5223 14.5406V4.72495C17.5223 3.7687 16.7066 2.9812 15.7504 2.9812ZM1.77227 8.21245H4.16289V10.9968H1.77227V8.21245ZM5.42852 8.21245H8.38164V10.9968H5.42852V8.21245ZM8.38164 12.2625V15.0187H5.42852V12.2625H8.38164V12.2625ZM9.64727 12.2625H12.6004V15.0187H9.64727V12.2625ZM9.64727 10.9968V8.21245H12.6004V10.9968H9.64727ZM13.8379 8.21245H16.2285V10.9968H13.8379V8.21245ZM2.25039 4.24683H3.71289V4.83745C3.71289 5.17495 3.99414 5.48433 4.35977 5.48433C4.72539 5.48433 5.00664 5.20308 5.00664 4.83745V4.24683H13.0504V4.83745C13.0504 5.17495 13.3316 5.48433 13.6973 5.48433C14.0629 5.48433 14.3441 5.20308 14.3441 4.83745V4.24683H15.7504C16.0316 4.24683 16.2566 4.47183 16.2566 4.75308V6.94683H1.77227V4.75308C1.77227 4.47183 1.96914 4.24683 2.25039 4.24683ZM1.77227 14.5125V12.2343H4.16289V14.9906H2.25039C1.96914 15.0187 1.77227 14.7937 1.77227 14.5125ZM15.7504 15.0187H13.8379V12.2625H16.2285V14.5406C16.2566 14.7937 16.0316 15.0187 15.7504 15.0187Z"
-                            fill="#64748B" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div >
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                      Fecha de Termino
-                    </label>
-                    <div class="relative">
-                      <input id="fechaTermino"
-                        class="form-datepicker w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                        placeholder="mm/dd/yyyy" data-class="flatpickr-right" />
 
-                      <div class="pointer-events-none absolute inset-0 left-auto right-5 flex items-center">
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M9.0002 12.8249C8.83145 12.8249 8.69082 12.7687 8.5502 12.6562L2.08145 6.2999C1.82832 6.04678 1.82832 5.65303 2.08145 5.3999C2.33457 5.14678 2.72832 5.14678 2.98145 5.3999L9.0002 11.278L15.0189 5.34365C15.2721 5.09053 15.6658 5.09053 15.9189 5.34365C16.1721 5.59678 16.1721 5.99053 15.9189 6.24365L9.45019 12.5999C9.30957 12.7405 9.16895 12.8249 9.0002 12.8249Z"
-                            fill="#64748B" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-             
-
-              <!-- Select input -->
 
             </div>
 
-            <div class="flex flex-col gap-9">
-              <!-- Textarea Fields -->
-            
-
-              <!-- Checkbox and radio 
-                <div
-                  class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
-                >
-                  <div
-                    class="border-b border-stroke px-6.5 py-4 dark:border-strokedark"
-                  >
-                    <h3 class="font-medium text-black dark:text-white">
-                      Checkbox and radio
-                    </h3>
+            <div class="grid grid-cols-3 gap-5 sm:grid-cols-3" x-data="dropdownHandler()">
+         
+              <div class="shadow-lg  rounded-md overflow-hidden max-w-xs mx-auto  border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                <img class="w-full h-52 object-cover"
+                  src="https://images.pexels.com/photos/90317/pexels-photo-90317.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                  alt="Hotel Room">
+                <div class="py-7 px-6">
+                  <div class="flex justify-between items-end">
+                    <span>Hotel Room</span>
+                    <button class="text-blue-500 capitalize border border-gray-300 rounded-md py-1 px-3">view
+                      stats</button>
                   </div>
-                  <div class="flex flex-col gap-5.5 p-6.5">
-                    <div x-data="{ checkboxToggle: false }">
-                      <label
-                        for="checkboxLabelOne"
-                        class="flex cursor-pointer select-none items-center text-sm font-medium"
-                      >
-                        <div class="relative">
-                          <input
-                            type="checkbox"
-                            id="checkboxLabelOne"
-                            class="sr-only"
-                            @change="checkboxToggle = !checkboxToggle"
-                          />
-                          <div
-                            :class="checkboxToggle && 'border-primary bg-gray dark:bg-transparent'"
-                            class="mr-4 flex h-5 w-5 items-center justify-center rounded border"
-                          >
-                            <span
-                              :class="checkboxToggle && 'bg-primary'"
-                              class="h-2.5 w-2.5 rounded-sm"
-                            ></span>
-                          </div>
-                        </div>
-                        Checkbox Text
-                      </label>
-                    </div>
-
-                    <div x-data="{ checkboxToggle: false }">
-                      <label
-                        for="checkboxLabelTwo"
-                        class="flex cursor-pointer select-none items-center text-sm font-medium"
-                      >
-                        <div class="relative">
-                          <input
-                            type="checkbox"
-                            id="checkboxLabelTwo"
-                            class="sr-only"
-                            @change="checkboxToggle = !checkboxToggle"
-                          />
-                          <div
-                            :class="checkboxToggle && 'border-primary bg-gray dark:bg-transparent'"
-                            class="mr-4 flex h-5 w-5 items-center justify-center rounded border"
-                          >
-                            <span
-                              :class="checkboxToggle && '!opacity-100'"
-                              class="opacity-0"
-                            >
-                              <svg
-                                width="11"
-                                height="8"
-                                viewBox="0 0 11 8"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M10.0915 0.951972L10.0867 0.946075L10.0813 0.940568C9.90076 0.753564 9.61034 0.753146 9.42927 0.939309L4.16201 6.22962L1.58507 3.63469C1.40401 3.44841 1.11351 3.44879 0.932892 3.63584C0.755703 3.81933 0.755703 4.10875 0.932892 4.29224L0.932878 4.29225L0.934851 4.29424L3.58046 6.95832C3.73676 7.11955 3.94983 7.2 4.1473 7.2C4.36196 7.2 4.55963 7.11773 4.71406 6.9584L10.0468 1.60234C10.2436 1.4199 10.2421 1.1339 10.0915 0.951972ZM4.2327 6.30081L4.2317 6.2998C4.23206 6.30015 4.23237 6.30049 4.23269 6.30082L4.2327 6.30081Z"
-                                  fill="#3056D3"
-                                  stroke="#3056D3"
-                                  stroke-width="0.4"
-                                ></path>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                        Checkbox Text
-                      </label>
-                    </div>
-
-                    <div x-data="{ checkboxToggle: false }">
-                      <label
-                        for="checkboxLabelThree"
-                        class="flex cursor-pointer select-none items-center text-sm font-medium"
-                      >
-                        <div class="relative">
-                          <input
-                            type="checkbox"
-                            id="checkboxLabelThree"
-                            class="sr-only"
-                            @change="checkboxToggle = !checkboxToggle"
-                          />
-                          <div
-                            :class="checkboxToggle && 'border-primary bg-gray dark:bg-transparent'"
-                            class="box mr-4 flex h-5 w-5 items-center justify-center rounded border"
-                          >
-                            <span
-                              :class="checkboxToggle && '!opacity-100'"
-                              class="text-primary opacity-0"
-                            >
-                              <svg
-                                class="h-3.5 w-3.5 stroke-current"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M6 18L18 6M6 6l12 12"
-                                ></path>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                        Checkbox Text
-                      </label>
-                    </div>
-
-                    <div x-data="{ checkboxToggle: false }">
-                      <label
-                        for="checkboxLabelFour"
-                        class="flex cursor-pointer select-none items-center text-sm font-medium text-black dark:text-white"
-                      >
-                        <div class="relative">
-                          <input
-                            type="checkbox"
-                            id="checkboxLabelFour"
-                            class="sr-only"
-                            @change="checkboxToggle = !checkboxToggle"
-                          />
-                          <div
-                            :class="checkboxToggle && 'border-primary'"
-                            class="mr-4 flex h-5 w-5 items-center justify-center rounded-full border"
-                          >
-                            <span
-                              :class="checkboxToggle && '!bg-primary'"
-                              class="h-2.5 w-2.5 rounded-full bg-transparent"
-                            >
-                            </span>
-                          </div>
-                        </div>
-                        Checkbox Text
-                      </label>
-                    </div>
-
-                    <div x-data="{ checkboxToggle: false }">
-                      <label
-                        for="checkboxLabelFive"
-                        class="flex cursor-pointer select-none items-center text-sm font-medium text-black dark:text-white"
-                      >
-                        <div class="relative">
-                          <input
-                            type="checkbox"
-                            id="checkboxLabelFive"
-                            class="sr-only"
-                            @change="checkboxToggle = !checkboxToggle"
-                          />
-                          <div
-                            :class="checkboxToggle && '!border-4'"
-                            class="box mr-4 flex h-5 w-5 items-center justify-center rounded-full border border-primary"
-                          >
-                            <span
-                              class="h-2.5 w-2.5 rounded-full bg-white dark:bg-transparent"
-                            >
-                            </span>
-                          </div>
-                        </div>
-                        Checkbox Text
-                      </label>
-                    </div>
-                  </div>
-                </div> 
-                -->
-
-              <div
-                class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div class="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                  <h3 class="font-medium text-black dark:text-white">
-                    Seleccionar Dimensiones
-                  </h3>
-                </div>
-
-
-                <div class="flex flex-col gap-5.5 p-6.5">
+                  <h1 class="text-2xl font-bold text-gray-800">$250.00</h1>
+                  <hr class="mt-3 mb-5">
+                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vestibulum fermentum tortor...</p>
+                  <span class="text-gray-400 text-sm mt-2.5 mb-6 block">Posted 2 hrs ago <span></span>New Chicago,
+                    ON</span>
                   <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                      Selecciona el Formato de Publicidad
-                    </label>
-                    <div class="relative z-20 bg-white dark:bg-form-input">
-
-                      <select
-                        class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                        :class="'text-black dark:text-white'" x-ref="tipoPublicidad"
-                        @change="actualizarPublic($event.target.value)">
-                        <option value="">Seleccione una Formato</option>
-                        <option value="1" class="text-body">Panel Publicitario</option>
-                        <option value="2" class="text-body">Valla Publicitario</option>
-                        <option value="3" class="text-body">Publicidad Digital</option>
-                        <option value="4" class="text-body">Publicidad en Piso</option>
-                      </select>
-                      <span class="absolute right-4 top-1/2 z-10 -translate-y-1/2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.8">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                              fill="#637381"></path>
-                          </g>
-                        </svg>
-                      </span>
-                    </div>
+                    <button class="capitalize bg-blue-500 rounded-md pt-1 pb-1.5 px-3.5 text-white">manage
+                      listing</button>
+                    <button class="text-gray-500 ml-2">Unpublish</button>
                   </div>
-
-
-
-
-                  <!-- Input Tamaño -->
-                  <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                      Selecciona el tamaño
-                    </label>
-                    <div class="relative z-20 bg-white dark:bg-form-input">
-                      <span class="absolute left-4 top-1/2 z-30 -translate-y-1/2">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.8">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M10.0007 2.50065C5.85852 2.50065 2.50065 5.85852 2.50065 10.0007C2.50065 14.1428 5.85852 17.5007 10.0007 17.5007C14.1428 17.5007 17.5007 14.1428 17.5007 10.0007C17.5007 5.85852 14.1428 2.50065 10.0007 2.50065ZM0.833984 10.0007C0.833984 4.93804 4.93804 0.833984 10.0007 0.833984C15.0633 0.833984 19.1673 4.93804 19.1673 10.0007C19.1673 15.0633 15.0633 19.1673 10.0007 19.1673C4.93804 19.1673 0.833984 15.0633 0.833984 10.0007Z"
-                              fill="#637381"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M0.833984 9.99935C0.833984 9.53911 1.20708 9.16602 1.66732 9.16602H18.334C18.7942 9.16602 19.1673 9.53911 19.1673 9.99935C19.1673 10.4596 18.7942 10.8327 18.334 10.8327H1.66732C1.20708 10.8327 0.833984 10.4596 0.833984 9.99935Z"
-                              fill="#637381"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M7.50084 10.0008C7.55796 12.5632 8.4392 15.0301 10.0006 17.0418C11.5621 15.0301 12.4433 12.5632 12.5005 10.0008C12.4433 7.43845 11.5621 4.97153 10.0007 2.95982C8.4392 4.97153 7.55796 7.43845 7.50084 10.0008ZM10.0007 1.66749L9.38536 1.10547C7.16473 3.53658 5.90275 6.69153 5.83417 9.98346C5.83392 9.99503 5.83392 10.0066 5.83417 10.0182C5.90275 13.3101 7.16473 16.4651 9.38536 18.8962C9.54325 19.069 9.76655 19.1675 10.0007 19.1675C10.2348 19.1675 10.4581 19.069 10.6159 18.8962C12.8366 16.4651 14.0986 13.3101 14.1671 10.0182C14.1674 10.0066 14.1674 9.99503 14.1671 9.98346C14.0986 6.69153 12.8366 3.53658 10.6159 1.10547L10.0007 1.66749Z"
-                              fill="#637381"></path>
-                          </g>
-                        </svg>
-                      </span>
-
-
-                      <select
-                        class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-12 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                        :class="'text-black dark:text-white'" x-model="medidaSeleccionada">
-
-                        <template x-for="medida in medidas" :key="medida">
-                          <option x-text="medida" :value="medida" class="text-body"></option>
-                        </template>
-
-                      </select>
-
-
-                      <span class="absolute right-4 top-1/2 z-10 -translate-y-1/2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g opacity="0.8">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                              fill="#637381"></path>
-                          </g>
-                        </svg>
-                      </span>
-                    </div>
-
-                  </div>
-
-                  <!-- <div>
-                     <label
-                       class="mb-3 block text-sm font-medium text-black dark:text-white"
-                     >
-                       Multiselect Dropdown
-                     </label>
-
-                     <div class="">
-                       <select class="hidden" x-cloak id="select">
-                         <option value="1">Option 2</option>
-                         <option value="2">Option 3</option>
-                         <option value="3">Option 4</option>
-                         <option value="4">Option 5</option>
-                       </select>
-
-                       <div
-                         x-data="dropdown()"
-                         x-init="loadOptions()"
-                         class="flex flex-col items-center"
-                       >
-                         <input
-                           name="values"
-                           type="hidden"
-                           :value="selectedValues()"
-                         />
-                         <div class="relative z-20 inline-block w-full">
-                           <div class="relative flex flex-col items-center">
-                             <div @click="open" class="w-full">
-                               <div
-                                 class="mb-2 flex rounded border border-stroke py-2 pl-3 pr-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                               >
-                                 <div class="flex flex-auto flex-wrap gap-3">
-                                   <template
-                                     x-for="(option,index) in selected"
-                                     :key="index"
-                                   >
-                                     <div
-                                       class="my-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray px-2.5 py-1.5 text-sm font-medium dark:border-strokedark dark:bg-white/30"
-                                     >
-                                       <div
-                                         class="max-w-full flex-initial"
-                                         x-model="options[option]"
-                                         x-text="options[option].text"
-                                       ></div>
-                                       <div
-                                         class="flex flex-auto flex-row-reverse"
-                                       >
-                                         <div
-                                           @click="remove(index,option)"
-                                           class="cursor-pointer pl-2 hover:text-danger"
-                                         >
-                                           <svg
-                                             class="fill-current"
-                                             role="button"
-                                             width="12"
-                                             height="12"
-                                             viewBox="0 0 12 12"
-                                             fill="none"
-                                             xmlns="http://www.w3.org/2000/svg"
-                                           >
-                                             <path
-                                               fill-rule="evenodd"
-                                               clip-rule="evenodd"
-                                               d="M9.35355 3.35355C9.54882 3.15829 9.54882 2.84171 9.35355 2.64645C9.15829 2.45118 8.84171 2.45118 8.64645 2.64645L6 5.29289L3.35355 2.64645C3.15829 2.45118 2.84171 2.45118 2.64645 2.64645C2.45118 2.84171 2.45118 3.15829 2.64645 3.35355L5.29289 6L2.64645 8.64645C2.45118 8.84171 2.45118 9.15829 2.64645 9.35355C2.84171 9.54882 3.15829 9.54882 3.35355 9.35355L6 6.70711L8.64645 9.35355C8.84171 9.54882 9.15829 9.54882 9.35355 9.35355C9.54882 9.15829 9.54882 8.84171 9.35355 8.64645L6.70711 6L9.35355 3.35355Z"
-                                               fill="currentColor"
-                                             ></path>
-                                           </svg>
-                                         </div>
-                                       </div>
-                                     </div>
-                                   </template>
-                                   <div
-                                     x-show="selected.length == 0"
-                                     class="flex-1"
-                                   >
-                                     <input
-                                       placeholder="Select a option"
-                                       class="h-full w-full appearance-none bg-transparent p-1 px-2 outline-none"
-                                       :value="selectedValues()"
-                                     />
-                                   </div>
-                                 </div>
-                                 <div
-                                   class="flex w-8 items-center py-1 pl-1 pr-1"
-                                 >
-                                   <button
-                                     type="button"
-                                     @click="open"
-                                     class="h-6 w-6 cursor-pointer outline-none focus:outline-none"
-                                     :class="isOpen() === true ? 'rotate-180' : ''"
-                                   >
-                                     <svg
-                                       width="24"
-                                       height="24"
-                                       viewBox="0 0 24 24"
-                                       fill="none"
-                                       xmlns="http://www.w3.org/2000/svg"
-                                     >
-                                       <g opacity="0.8">
-                                         <path
-                                           fill-rule="evenodd"
-                                           clip-rule="evenodd"
-                                           d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                                           fill="#637381"
-                                         ></path>
-                                       </g>
-                                     </svg>
-                                   </button>
-                                 </div>
-                               </div>
-                             </div>
-                             <div class="w-full px-4">
-                               <div
-                                 x-show.transition.origin.top="isOpen()"
-                                 class="max-h-select absolute top-full left-0 z-40 w-full overflow-y-auto rounded bg-white shadow dark:bg-form-input"
-                                 @click.outside="close"
-                               >
-                                 <div class="flex w-full flex-col">
-                                   <template
-                                     x-for="(option,index) in options"
-                                     :key="index"
-                                   >
-                                     <div>
-                                       <div
-                                         class="w-full cursor-pointer rounded-t border-b border-stroke hover:bg-primary/5 dark:border-form-strokedark"
-                                         @click="select(index,$event)"
-                                       >
-                                         <div
-                                           :class="option.selected ? 'border-primary' : ''"
-                                           class="relative flex w-full items-center border-l-2 border-transparent p-2 pl-2"
-                                         >
-                                           <div
-                                             class="flex w-full items-center"
-                                           >
-                                             <div
-                                               class="mx-2 leading-6"
-                                               x-model="option"
-                                               x-text="option.text"
-                                             ></div>
-                                           </div>
-                                         </div>
-                                       </div>
-                                     </div>
-                                   </template>
-                                 </div>
-                               </div>
-                             </div>
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-                   </div> -->
-
-
-
                 </div>
               </div>
 
-
-
-
-              <div
-                class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ">
-                <div class="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                  <h3 class="font-medium text-black dark:text-white">
-                    Tarifas
-                  </h3>
-                </div>
-
-
-                <div class="flex flex-col gap-2.5 p-6.5">
+              <div class="shadow-lg  rounded-md overflow-hidden max-w-xs mx-auto  border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                <img class="w-full h-52 object-cover"
+                  src="https://images.pexels.com/photos/90317/pexels-photo-90317.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                  alt="Hotel Room">
+                <div class="py-7 px-6">
+                  <div class="flex justify-between items-end">
+                    <span>Hotel Room</span>
+                    <button class="text-blue-500 capitalize border border-gray-300 rounded-md py-1 px-3">view
+                      stats</button>
+                  </div>
+                  <h1 class="text-2xl font-bold text-gray-800">$250.00</h1>
+                  <hr class="mt-3 mb-5">
+                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vestibulum fermentum tortor...</p>
+                  <span class="text-gray-400 text-sm mt-2.5 mb-6 block">Posted 2 hrs ago <span></span>New Chicago,
+                    ON</span>
                   <div>
-                    <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                      Total
-                    </label>
-                    <input type="text" placeholder="$12, 000" disabled=""
-                      class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-2 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary dark:disabled:bg-black" />
+                    <button class="capitalize bg-blue-500 rounded-md pt-1 pb-1.5 px-3.5 text-white">manage
+                      listing</button>
+                    <button class="text-gray-500 ml-2">Unpublish</button>
                   </div>
                 </div>
-
-
-
-
-                <!-- Input Tamaño -->
-                <div class=" pl-36 pb-2" >
-                  <a href="#"
-                    class=" inline-flex mr-8 gap-2.5 rounded-md bg-primary px-10 py-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10">
-                    <span>
-                      <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M18.0758 0.849976H16.0695C15.819 0.851233 15.5774 0.942521 15.3886 1.10717C15.1999 1.27183 15.0766 1.49887 15.0414 1.74685L14.4789 5.80935H13.3976V3.4031C13.3952 3.1654 13.3002 2.93802 13.1327 2.76935C12.9652 2.60068 12.7384 2.50403 12.5008 2.49998H10.082C10.0553 2.27763 9.94981 2.07221 9.78472 1.92089C9.61964 1.76956 9.40584 1.68233 9.18202 1.67498H6.45389C6.32885 1.67815 6.20571 1.70632 6.09172 1.75782C5.97773 1.80932 5.8752 1.8831 5.79017 1.97484C5.70513 2.06657 5.63932 2.17439 5.59659 2.29195C5.55387 2.40951 5.5351 2.53443 5.54139 2.65935V3.32498H3.15077C2.91396 3.32162 2.68544 3.41207 2.51507 3.57659C2.3447 3.7411 2.24632 3.96632 2.24139 4.2031V5.81248C2.0999 5.81539 1.96078 5.84937 1.83387 5.91201C1.70697 5.97466 1.59538 6.06443 1.50702 6.17498C1.41616 6.29094 1.35267 6.42593 1.32128 6.56986C1.2899 6.7138 1.29143 6.86297 1.32577 7.00623C1.32443 7.02182 1.32443 7.0375 1.32577 7.0531L3.23827 12.9375C3.29323 13.1432 3.4153 13.3247 3.58513 13.4532C3.75496 13.5818 3.96282 13.6499 4.17577 13.6468H13.3883C13.7379 13.6464 14.0756 13.5197 14.3391 13.29C14.6027 13.0603 14.7744 12.7431 14.8226 12.3968L16.2508 2.09998H18.0726C18.2384 2.09998 18.3974 2.03413 18.5146 1.91692C18.6318 1.79971 18.6976 1.64074 18.6976 1.47498C18.6976 1.30922 18.6318 1.15024 18.5146 1.03303C18.3974 0.915824 18.2384 0.849976 18.0726 0.849976H18.0758ZM12.1383 5.79373H10.0945V3.74998H12.1476L12.1383 5.79373ZM6.79139 2.9156H8.84452V3.39998V5.7906H6.79139V2.9156ZM3.49139 4.5656H5.54139V5.79373H3.49139V4.5656ZM13.5851 12.225C13.579 12.2727 13.5556 12.3166 13.5193 12.3483C13.4831 12.38 13.4364 12.3972 13.3883 12.3968H4.37577L2.65389 7.04998H14.3039L13.5851 12.225Z"
-                          fill="" />
-                        <path
-                          d="M5.31172 15.1125C4.9118 15.1094 4.51997 15.2252 4.18594 15.4451C3.85191 15.665 3.59073 15.9792 3.43553 16.3478C3.28034 16.7164 3.23813 17.1228 3.31425 17.5154C3.39037 17.908 3.58139 18.2692 3.86309 18.5531C4.14478 18.837 4.50445 19.0308 4.89647 19.11C5.28849 19.1891 5.6952 19.1501 6.06499 18.9978C6.43477 18.8454 6.75099 18.5867 6.97351 18.2544C7.19603 17.9221 7.31483 17.5312 7.31485 17.1312C7.31608 16.8671 7.26522 16.6053 7.16518 16.3608C7.06515 16.1164 6.91789 15.894 6.73184 15.7065C6.5458 15.519 6.3246 15.3701 6.08092 15.2681C5.83725 15.1662 5.57586 15.1133 5.31172 15.1125ZM5.31172 17.9C5.15905 17.9031 5.00891 17.8607 4.88045 17.7781C4.75199 17.6955 4.65103 17.5766 4.59045 17.4364C4.52986 17.2962 4.51239 17.1412 4.54026 16.9911C4.56814 16.8409 4.64009 16.7025 4.74695 16.5934C4.85382 16.4843 4.99075 16.4096 5.14028 16.3786C5.28981 16.3477 5.44518 16.3619 5.58656 16.4196C5.72794 16.4773 5.84894 16.5758 5.93412 16.7026C6.0193 16.8293 6.06481 16.9785 6.06484 17.1312C6.06651 17.3329 5.9882 17.5271 5.84705 17.6712C5.70589 17.8152 5.51341 17.8975 5.31172 17.9Z"
-                          fill="" />
-                        <path
-                          d="M12.9504 15.1125C12.5505 15.1094 12.1586 15.2252 11.8246 15.4451C11.4906 15.665 11.2294 15.9792 11.0742 16.3478C10.919 16.7164 10.8768 17.1228 10.9529 17.5154C11.029 17.908 11.2201 18.2692 11.5018 18.5531C11.7835 18.837 12.1431 19.0308 12.5351 19.11C12.9272 19.1891 13.3339 19.1501 13.7037 18.9978C14.0734 18.8454 14.3897 18.5867 14.6122 18.2544C14.8347 17.9221 14.9535 17.5312 14.9535 17.1312C14.9552 16.598 14.7452 16.086 14.3696 15.7075C13.994 15.329 13.4836 15.115 12.9504 15.1125ZM12.9504 17.9C12.7977 17.9031 12.6476 17.8607 12.5191 17.7781C12.3907 17.6955 12.2897 17.5766 12.2291 17.4364C12.1685 17.2962 12.1511 17.1412 12.1789 16.9911C12.2068 16.8409 12.2788 16.7025 12.3856 16.5934C12.4925 16.4843 12.6294 16.4096 12.779 16.3786C12.9285 16.3477 13.0838 16.3619 13.2252 16.4196C13.3666 16.4773 13.4876 16.5758 13.5728 16.7026C13.658 16.8293 13.7035 16.9785 13.7035 17.1312C13.7052 17.3329 13.6269 17.5271 13.4857 17.6712C13.3446 17.8152 13.1521 17.8975 12.9504 17.9Z"
-                          fill="" />
-                      </svg>
-                    </span>
-                    Rentar
-                  </a>
-
-
-                </div>
-
-
-
-
               </div>
+
+              <div class="shadow-lg  rounded-md overflow-hidden max-w-xs mx-auto  border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                <img class="w-full h-52 object-cover"
+                  src="https://images.pexels.com/photos/90317/pexels-photo-90317.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                  alt="Hotel Room">
+                <div class="py-7 px-6">
+                  <div class="flex justify-between items-end">
+                    <span>Hotel Room</span>
+                    <button class="text-blue-500 capitalize border border-gray-300 rounded-md py-1 px-3">view
+                      stats</button>
+                  </div>
+                  <h1 class="text-2xl font-bold text-gray-800">$250.00</h1>
+                  <hr class="mt-3 mb-5">
+                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vestibulum fermentum tortor...</p>
+                  <span class="text-gray-400 text-sm mt-2.5 mb-6 block">Posted 2 hrs ago <span></span>New Chicago,
+                    ON</span>
+                  <div>
+                    <button class="capitalize bg-blue-500 rounded-md pt-1 pb-1.5 px-3.5 text-white">manage
+                      listing</button>
+                    <button class="text-gray-500 ml-2">Unpublish</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="shadow-lg  rounded-md overflow-hidden max-w-xs mx-auto  border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                <img class="w-full h-52 object-cover"
+                  src="https://images.pexels.com/photos/90317/pexels-photo-90317.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                  alt="Hotel Room">
+                <div class="py-7 px-6">
+                  <div class="flex justify-between items-end">
+                    <span>Hotel Room</span>
+                    <button class="text-blue-500 capitalize border border-gray-300 rounded-md py-1 px-3">view
+                      stats</button>
+                  </div>
+                  <h1 class="text-2xl font-bold text-gray-800">$250.00</h1>
+                  <hr class="mt-3 mb-5">
+                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vestibulum fermentum tortor...</p>
+                  <span class="text-gray-400 text-sm mt-2.5 mb-6 block">Posted 2 hrs ago <span></span>New Chicago,
+                    ON</span>
+                  <div>
+                    <button class="capitalize bg-blue-500 rounded-md pt-1 pb-1.5 px-3.5 text-white">manage
+                      listing</button>
+                    <button class="text-gray-500 ml-2">Unpublish</button>
+                  </div>
+                </div>
+              </div>
+  
             </div>
+  
           </div>
-        </div>
 
-        <!-- ====== Form Elements Section End -->
+
+     
+          <!-- ====== Form Elements Section End -->
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
     </div>
-    </main>
-    <!-- ===== Main Content End ===== -->
-  </div>
-  <!-- ===== Content Area End ===== -->
+    <!-- ===== Content Area End ===== -->
   </div>
   <!-- ===== Page Wrapper End ===== -->
 
-  <script>
-
-  </script>
 
   <script>
     function dropdownHandler() {
       return {
-        stations: [],
+        lineas: [],
+        estaciones: [],
+        lineasUnicas: [],
+        estacionesFiltradas: [],
+        selectedLinea: null,
         selectedStation: null,
-        updateStations(line) {
-          const stationsByLine = {
-            1: ['Ciudad Azteca', 'Quinto Sol', 'Josefa Ortíz', ' Industrial', 'Unitec', 'Torres', 'Zodiaco', 'Adolfo López Mateos', ' Vocacional 3', 'Valle De Ecatepec', 'Las Américas', 'Primero De Mayo'],
-            2: ['La Quebrada', 'ERO (Estación Retorno Oriente)', ' Lechería'],
-            3: [' Pantitlán', 'Calle 6', 'El Barquito'],
-            4: [' Indios Verdes', 'Periférico', 'Puente Martin Carrera'],
-          };
-
-          this.stations = stationsByLine[line] || [];
-          this.selectedStation = null; // Resetea la estación seleccionada al cambiar de línea
+        espacioSeleccionado: null,
+        selectedEspacio: null,
+        espacios: [],
+        init() {
+          fetch('http://localhost/SWAP-MEXIBUS/server/estaciones.php')
+            .then(response => response.json())
+            .then(data => {
+              console.log("Datos cargados:", data);
+              this.lineas = data;
+              this.lineasUnicas = [...new Set(data.map(estacion => estacion.linea))];
+              console.log("Lineas después de asignar:", this.lineas);
+            }).catch(error => console.error("Error cargando los datos:", error));
         },
-      };
-    }
-    function manejarCambio() {
-      return {
-        medidas: [],
-        medidaSeleccionada: null,
-        actualizarOpc(opcSeleccionada) {
-          const tipoPublicidad = this.$refs.tipoPublicidad;
-          console.log(this.$refs)
+        updateStations() {
+          this.estacionesFiltradas = this.lineas.filter(estacion => estacion.linea == this.selectedLinea);
+          this.selectedStation = null;
+        },
+        updateEspacios() {
 
-          tipoPublicidad.querySelectorAll('option').forEach((option) => {
-            option.disabled = false;
-          });
+          if (this.selectedStation) {
+            const estacionSeleccionada = this.estacionesFiltradas.find(e => e.nombre_estacion === this.selectedStation);
+            this.espacios = estacionSeleccionada ? estacionSeleccionada.espacios : [];
+            if (this.selectedEspacio) {
+              this.espacioSeleccionado = this.espacios.find(e => e.id_espacio.toString() === this.selectedEspacio);
+            }
 
-          if (opcSeleccionada === '1') {
-            tipoPublicidad.querySelector('option[value="3"]').disabled = true;
-            tipoPublicidad.querySelector('option[value="4"]').disabled = true;
+          } else {
+            this.espacios = [];
+            this.espacioSeleccionado = null;
+          }
+        },
+
+        agregarAlCarrito() {
+          const id_contratante = localStorage.getItem('id');
+          const fechaInicio = document.getElementById('fechaInicio').value;
+          const fechaTermino = document.getElementById('fechaTermino').value;
+
+          if (!this.espacioSeleccionado || !fechaInicio || !fechaTermino) {
+            alert("Faltan datos para agregar al carrito");
+            return;
           }
 
+          const idProductoCarrito = this.espacioSeleccionado.id_producto;
+          const precioFinal = this.espacioSeleccionado.precio;
+
+          console.log(fechaInicio);
+          console.log(fechaTermino);
+          console.log(this.espacioSeleccionado.id_espacio);
+          console.log(precioFinal);
+
+          fetch('http://localhost/SWAP-MEXIBUS/server/addCarrito.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id_contratante: id_contratante,
+              id_espacio: this.espacioSeleccionado.id_espacio,
+              fecha_inicio: fechaInicio,
+              fecha_fin: fechaTermino,
+              precio_final: precioFinal,
+            }),
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log("Respuesta del servidor:", data);
+              // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito
+              alert('Agregado con Exito')
+            })
+            .catch(error => {
+              console.error("Error al agregar al carrito:", error);
+            });
         },
-        actualizarPublic(publicidad) {
-          const medidasPorPublicidad = {
-            1: ['A1', 'A2', 'A3'],
-            2: ['4 X 3m', '5 x 4m'],
-            3: ['Pantalla 55 pulgadas', 'Pantalla 32 pulgadas'],
-            4: ['A1', 'A2', 'A3']
-          };
-
-          this.medidas = medidasPorPublicidad[publicidad] || [];
-          this.medidaSeleccionada = null;
-        }
-      }
 
 
+
+      };
     }
 
-   
-    /*    */
-
-    /* Alpine.data('manejarUbicacion', () => ({
-            actualizarOpc(opcSeleccionada) {
-                window.dispatchEvent(new CustomEvent('ubicacion-cambiada', {detail: { ubicacion: opcSeleccionada }}));
-            }
-        }));
-     */
-    /*  Alpine.data('manejarPublicidad', () => ({
-         init() {
-             window.addEventListener('ubicacion-cambiada', event => {
-                 const ubicacion = event.detail.ubicacion;
-                 if (ubicacion === '1') { // Suponiendo que '1' es externa
-                     this.$refs.tipoPublicidad.querySelector('option[value="3"]').disabled = true;
-                     this.$refs.tipoPublicidad.querySelector('option[value="4"]').disabled = true;
-                 } else {
-                     
-                 }
-             });
-         }
-     })); */
 
 
 
-
-    /* document.addEventListener('alpine:init', () => {
-        Alpine.data('manejarCambio', manejarCambio);
-    }); */
-
-    /*  function dropdown() {
-       return {
-         options: [],
-         selected: [],
-         show: false,
-         open() {
-           this.show = true;
-         },
-         close() {
-           this.show = false;
-         },
-         isOpen() {
-           return this.show === true;
-         },
-         select(index, event) {
-           if (!this.options[index].selected) {
-             this.options[index].selected = true;
-             this.options[index].element = event.target;
-             this.selected.push(index);
-           } else {
-             this.selected.splice(this.selected.lastIndexOf(index), 1);
-             this.options[index].selected = false;
-           }
-         },
-         remove(index, option) {
-           this.options[option].selected = false;
-           this.selected.splice(index, 1);
-         },
-         loadOptions() {
-           const options = document.getElementById("select").options;
-           for (let i = 0; i < options.length; i++) {
-             this.options.push({
-               value: options[i].value,
-               text: options[i].innerText,
-               selected:
-                 options[i].getAttribute("selected") != null
-                   ? options[i].getAttribute("selected")
-                   : false,
-             });
-           }
-         },
-         selectedValues() {
-           return this.selected.map((option) => {
-             return this.options[option].value;
-           });
-         },
-       };
-     } */
   </script>
 </body>
 

@@ -56,7 +56,7 @@
               <div class="hidden w-full xl:block xl:w-1/2">
                 <div class="px-26 py-17.5 text-center">
                   <a class="mb-5.5 inline-block" href="index.html">
-                    <img class="hidden dark:block" src="./images/logo/swap.png" alt="Logo" />
+                    <img class="hidden dark:block" src="./images/logo/swap_dark.png" alt="Logo" />
                     <img class="dark:hidden" src="./images/logo/swap.png" alt="Logo" />
                   </a>
 
@@ -135,7 +135,7 @@
                     <div class="mt-6 text-center">
                       <p class="font-medium">
                         ¿Olvidaste tu Contraseña?
-                        <a href="signup.html" class="text-primary">Recuperar Contraseña</a>
+                        <a href="recuperar-contraseña.html" class="text-primary">Recuperar Contraseña</a>
                       </p>
                     </div>
                     <!--  <div class="mt-6 text-center">
@@ -161,13 +161,19 @@
 </body>
 
 <script>
+  /**
+   * Function to handle user session management.
+   * @returns {Object} An object with email, password, and submitForm properties.
+   */
   function manejoSesion() {
     return {
       email: '',
       password: '',
+      /**
+       * Submits the form with the user's credentials and performs a login request.
+       */
       submitForm() {
         const credenciales = { email: this.email, password: this.password };
-
 
         fetch('http://localhost/SWAP-MEXIBUS/server/login.php', {
           method: 'POST',
@@ -175,11 +181,16 @@
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(credenciales),
-        }).then(response => response.json())
+        })
+          .then(response => response.json())
           .then(data => {
             if (data.success) {
               localStorage.setItem('nombre', data.user.nombre);
+              localStorage.setItem('id', data.user.id_contratante);
               localStorage.setItem('rol', data.user.rol);
+              localStorage.setItem('token', data.user.token);
+              localStorage.setItem('usuarioLogueado', 'true');
+              localStorage.setItem('id_carrito', data.id_carrito);
 
               console.log('Login exitoso', data);
               window.location.href = 'index.html';
@@ -192,8 +203,6 @@
           });
       }
     }
-
-
   }
 </script>
 

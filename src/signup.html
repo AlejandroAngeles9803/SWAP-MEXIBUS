@@ -336,11 +336,14 @@
             .then(response => {
               if (!response.ok) {
                 throw new Error('Error en el registro');
+              }else{
+                alert('Registro con exito');
+                window.location.href = 'index.html';
               }
-              return response.text(); // Primero obtenemos el texto
+              return response.text(); 
             })
             .then(text => {
-              // Luego intentamos analizar el texto como JSON
+              
               try {
                 return JSON.parse(text);
               } catch (e) {

@@ -14,6 +14,11 @@
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
   :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+  <script>
+    if (!localStorage.getItem('token')) {
+      window.location.href = '/singnin.html';
+    }
+  </script>
   <!-- ===== Preloader Start ===== -->
   <include src="./partials/preloader.html"></include>
   <!-- ===== Preloader End ===== -->
@@ -54,158 +59,29 @@
             <!-- ====== Settings Section Start -->
             <div class="grid grid-cols-5 gap-8">
               <div class="col-span-5 xl:col-span-3">
-                <div
-                  class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div class="border-b border-stroke px-7 py-4 dark:border-strokedark">
-                    <h3 class="font-medium text-black dark:text-white">
-                      Elige la publicidad a modificar
-                    </h3>
-                  </div>
-                  <div class="p-7">
-                    <form action="#">
-                    
-                           <div class="relative">
-                          <button class="absolute left-0 top-1/2 -translate-y-1/2">
-                            <svg class="fill-body hover:fill-primary dark:fill-bodydark dark:hover:fill-primary" width="20" height="20"
-                              viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M9.16666 3.33332C5.945 3.33332 3.33332 5.945 3.33332 9.16666C3.33332 12.3883 5.945 15 9.16666 15C12.3883 15 15 12.3883 15 9.16666C15 5.945 12.3883 3.33332 9.16666 3.33332ZM1.66666 9.16666C1.66666 5.02452 5.02452 1.66666 9.16666 1.66666C13.3088 1.66666 16.6667 5.02452 16.6667 9.16666C16.6667 13.3088 13.3088 16.6667 9.16666 16.6667C5.02452 16.6667 1.66666 13.3088 1.66666 9.16666Z"
-                                fill="" />
-                              <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M13.2857 13.2857C13.6112 12.9603 14.1388 12.9603 14.4642 13.2857L18.0892 16.9107C18.4147 17.2362 18.4147 17.7638 18.0892 18.0892C17.7638 18.4147 17.2362 18.4147 16.9107 18.0892L13.2857 14.4642C12.9603 14.1388 12.9603 13.6112 13.2857 13.2857Z"
-                                fill="" />
-                            </svg>
-                          </button>
-                
-                          <input type="text" placeholder="Buscar Por Titulo..."
-                            class="w-full bg-transparent pl-9 pr-4 focus:outline-none xl:w-125" />
-                        </div>
+                <div>
+                  <label class="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Espacios Disponibles
+                  </label>
+                  <div class="relative z-20 bg-white dark:bg-form-input">
 
-                      <div class="mt-8 ">
-                        <label class="mb-3 block text-sm font-medium text-black dark:text-white">
-                          Filtrar por Características
-                        </label>
-
-                        <div class="">
-                          <select class="hidden" x-cloak id="select">
-                            <option value="1">Linea 1</option>
-                            <option value="2">Linea 2</option>
-                            <option value="3">Linea 3</option>
-                            <option value="4">Linea 4</option>
-                            <option value="4">Lado Izquierdo</option>
-                            <option value="4">Lado Derecho</option>
-                            <option value="4">Parte Externa</option>
-                            <option value="4">Parte Interna</option>
-
-                          </select>
-
-                          <div x-data="dropdown()" x-init="loadOptions()" class="flex flex-col items-center">
-                            <input name="values" type="hidden" :value="selectedValues()" />
-                            <div class="relative z-20 inline-block w-full">
-                              <div class="relative flex flex-col items-center">
-                                <div @click="open" class="w-full">
-                                  <div
-                                    class="mb-2 flex rounded border border-stroke py-2 pl-3 pr-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
-                                    <div class="flex flex-auto flex-wrap gap-3">
-                                      <template x-for="(option,index) in selected" :key="index">
-                                        <div
-                                          class="my-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray px-2.5 py-1.5 text-sm font-medium dark:border-strokedark dark:bg-white/30">
-                                          <div class="max-w-full flex-initial" x-model="options[option]"
-                                            x-text="options[option].text"></div>
-                                          <div class="flex flex-auto flex-row-reverse">
-                                            <div @click="remove(index,option)"
-                                              class="cursor-pointer pl-2 hover:text-danger">
-                                              <svg class="fill-current" role="button" width="12" height="12"
-                                                viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                  d="M9.35355 3.35355C9.54882 3.15829 9.54882 2.84171 9.35355 2.64645C9.15829 2.45118 8.84171 2.45118 8.64645 2.64645L6 5.29289L3.35355 2.64645C3.15829 2.45118 2.84171 2.45118 2.64645 2.64645C2.45118 2.84171 2.45118 3.15829 2.64645 3.35355L5.29289 6L2.64645 8.64645C2.45118 8.84171 2.45118 9.15829 2.64645 9.35355C2.84171 9.54882 3.15829 9.54882 3.35355 9.35355L6 6.70711L8.64645 9.35355C8.84171 9.54882 9.15829 9.54882 9.35355 9.35355C9.54882 9.15829 9.54882 8.84171 9.35355 8.64645L6.70711 6L9.35355 3.35355Z"
-                                                  fill="currentColor"></path>
-                                              </svg>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </template>
-                                      <div x-show="selected.length == 0" class="flex-1">
-                                        <input placeholder="Selecciona una o mas opciones"
-                                          class="h-full w-full appearance-none bg-transparent p-1 px-2 outline-none"
-                                          :value="selectedValues()" />
-                                      </div>
-                                    </div>
-                                    <div class="flex w-8 items-center py-1 pl-1 pr-1">
-                                      <button type="button" @click="open"
-                                        class="h-6 w-6 cursor-pointer outline-none focus:outline-none"
-                                        :class="isOpen() === true ? 'rotate-180' : ''">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                          xmlns="http://www.w3.org/2000/svg">
-                                          <g opacity="0.8">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                              d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                                              fill="#637381"></path>
-                                          </g>
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="w-full px-4">
-                                  <div x-show.transition.origin.top="isOpen()"
-                                    class="max-h-select absolute top-full left-0 z-40 w-full overflow-y-auto rounded bg-white shadow dark:bg-form-input"
-                                    @click.outside="close">
-                                    <div class="flex w-full flex-col">
-                                      <template x-for="(option,index) in options" :key="index">
-                                        <div>
-                                          <div
-                                            class="w-full cursor-pointer rounded-t border-b border-stroke hover:bg-primary/5 dark:border-form-strokedark"
-                                            @click="select(index,$event)">
-                                            <div :class="option.selected ? 'border-primary' : ''"
-                                              class="relative flex w-full items-center border-l-2 border-transparent p-2 pl-2">
-                                              <div class="flex w-full items-center">
-                                                <div class="mx-2 leading-6" x-model="option" x-text="option.text"></div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </template>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div
-                                  class="mb-3 w-full block text-sm font-medium text-black dark:text-white my-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray px-2.5 py-1.5 text-sm font-medium dark:border-strokedark dark:bg-white/30 mb-2 flex rounded border border-stroke py-2 pl-3 pr-3 outline-none transition focus:border-primary active:border-primary dark:active:border-primary cursor-pointer "
-                                  role="button" data-value="1" x-show="isVisible('1')">Espacio de Linea 1</div>
-                                <div
-                                  class="mb-3 w-full block text-sm font-medium text-black dark:text-white my-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray px-2.5 py-1.5 text-sm font-medium dark:border-strokedark dark:bg-white/30 mb-2 flex rounded border border-stroke py-2 pl-3 pr-3 outline-none transition focus:border-primary active:border-primary dark:active:border-primary cursor-pointer "
-                                  data-value="2" x-show="isVisible('2')">Espacio de Linea 2</div>
-                                <div
-                                  class="mb-3 w-full block text-sm font-medium text-black dark:text-white my-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray px-2.5 py-1.5 text-sm font-medium dark:border-strokedark dark:bg-white/30 mb-2 flex rounded border border-stroke py-2 pl-3 pr-3 outline-none transition focus:border-primary active:border-primary dark:active:border-primary cursor-pointer "
-                                  data-value="3" x-show="isVisible('3')">Espacio de Lado Izquierdo</div>
-                                <div
-                                  class="mb-3 w-full block text-sm font-medium text-black dark:text-white my-1.5 flex items-center justify-center rounded border-[.5px] border-stroke bg-gray px-2.5 py-1.5 k dark:bg-white/30 mb-2 flex outline-none transition focus:border-primary active:border-primary dark:active:border-primary cursor-pointer "
-                                  data-value="4" x-show="isVisible('4')">Espacio de Lado Derecho</div>
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-
-
-
-
-
-                      <div class="flex justify-end gap-4.5">
-                        <!--  <button
-                            class="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                            type="submit"
-                          >
-                            Cancel
-                          </button> -->
-                        <button
-                          class="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-                          type="submit">
-                          Modificar
-                        </button>
-                      </div>
-                    </form>
+                    <select
+                      class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 pl-5 pr-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+                      :class="'text-black dark:text-white'" x-model="selectedEspacio" @change="updateEspacios()">
+                      <option value="">Seleccione un Espacio Disponible</option>
+                      <template x-for="espacio in espacios" :key="espacio.id_espacio">
+                        <option :value="espacio.id_espacio" x-text="`${selectedStation} ${espacio.lado}`"></option>
+                      </template>
+                    </select>
+                    <span class="absolute right-4 top-1/2 z-10 -translate-y-1/2">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g opacity="0.8">
+                          <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
+                            fill="#637381"></path>
+                        </g>
+                      </svg>
+                    </span>
                   </div>
                 </div>
                 
