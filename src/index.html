@@ -329,7 +329,8 @@
                       </div>
 
                       <div>
-                        <button  @click="agregarAlCarrito(espacio)" class="capitalize bg-blue-500 rounded-md pt-1 pb-1.5 px-3.5 text-white">Agregar al
+                        <button @click="agregarAlCarrito(espacio)"
+                          class="capitalize bg-blue-500 rounded-md pt-1 pb-1.5 px-3.5 text-white">Agregar al
                           Carrito</button>
                         <button class="text-gray-500 ml-2">Ver Detalles</button>
                       </div>
@@ -362,6 +363,7 @@
   function manejoDatos() {
     return {
       lineas: [],
+      socket: null,
       estaciones: [],
       lineasUnicas: [],
       estacionesFiltradas: [],
@@ -371,16 +373,55 @@
       selectedEspacio: null,
       espacios: [],
       init() {
-        fetch('http://localhost/SWAP-MEXIBUS/server/estaciones.php')
-          .then(response => response.json())
-          .then(data => {
-            console.log("Datos cargados:", data);
-            this.lineas = data;
-            this.lineasUnicas = [...new Set(data.map(estacion => estacion.linea))];
-            console.log("Lineas después de asignar:", this.lineas);
-            const todosLosEspacios = data.flatMap(estacion => estacion.espacios);
-            this.espacios = this.seleccionarEspaciosAlAzar(todosLosEspacios, 6);
-          }).catch(error => console.error("Error cargando los datos:", error));
+
+        this.socket = new WebSocket('ws://localhost:1080');
+
+        this.socket.onopen = () => { 
+          console.log('WebSocket conexión aceptada ');
+          this.socket.send(JSON.stringify({ action: 'getEstaciones' }));
+        };
+
+        this.socket.onmessage = (event) => {
+          /*  const data = JSON.parse(event.data);
+           const accion = JSON.parse(event.accion);
+           console.log("Datos cargados:", data);
+ 
+           console.log(data);
+           console.log(accion);
+           
+          */
+          const respuesta = JSON.parse(event.data);
+          console.log('Parsed response:', respuesta.accion);
+          switch (respuesta.accion) {
+            case 'getEstacionesRespuesta':
+              this.lineas = respuesta.data;
+              this.lineasUnicas = [...new Set(respuesta.data.map(estacion => estacion.linea))];
+              console.log("Lineas después de asignar:", this.lineas);
+              const todosLosEspacios = respuesta.data.flatMap(estacion => estacion.espacios);
+              this.espacios = this.seleccionarEspaciosAlAzar(todosLosEspacios, 6);
+              break;
+            case 'agregarAlCarritoRespuesta':
+              alert(respuesta.data.message); 
+              break;
+          }
+
+        };
+        this.socket.onerror = (error) => { 
+          console.log('WebSocket error:', error);
+        };
+
+        setInterval(() => {
+          this.requestData(this.socket);
+        }, 100000);
+
+        // Definido correctamente fuera de onopen, onmessage, etc.
+        this.requestData = (socket) => {
+          socket.send(JSON.stringify({ action: 'getEstaciones' }));
+        };
+
+
+
+
       },
       updateStations() {
         this.estacionesFiltradas = this.lineas.filter(estacion => estacion.linea == this.selectedLinea);
@@ -412,37 +453,31 @@
 
         return espaciosSeleccionados;
       },
-      
+
+
 
       agregarAlCarrito(espacio) {
-      const url = 'http://localhost/SWAP-MEXIBUS/server/addCarrito.php'; // Cambia esta URL por tu endpoint real
-      const datos = {
-        id_espacio: espacio.id_espacio,
-        id_carrito: localStorage.getItem('id_carrito'),
-        precio: espacio.precio,
-        cantidad: 1, 
-      };
+        const datos = {
+          action: 'agregarAlCarrito',
+          id_espacio: espacio.id_espacio,
+          precio: espacio.precio,
+          cantidad: 1,
+          id_carrito: localStorage.getItem('id_carrito')
+        };
 
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datos),
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Artículo agregado al carrito:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-    },
+        console.log(datos)
+        this.socket.send(JSON.stringify(datos));
+      },
+
+
+
     };
-    
+
+
+
   }
 
-  
+
 
 </script>
 

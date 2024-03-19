@@ -54,11 +54,11 @@
                 </ol>
               </nav>
             </div>
-            <div class="container mx-auto my-12" x-data="carrito()" x-init="cargarCarrito()">
+            <div class="container mx-auto my-12" x-data="carrito()" x-init="init()">
               <div class="flex flex-col gap-6 md:flex-row">
                 <div
                   class="flex-1 shrink-0 rounded-sm border border-neutral-200 bg-white px-4 py-8 shadow-sm  dark:bg-boxdark ">
-                  <div class="mb-8">
+                  <div class="mb-6">
                     <h3 class="text-2xl text-black font-bold dark:text-white ">Resúmen de tu Compra</h3>
                     <p>Revisa tus Productos Añadidos</p>
                   </div>
@@ -66,13 +66,25 @@
                     <!-- product item 1 -->
 
                     <li class="flex py-6">
-                      <!-- <div class="h-32 w-24 flex-shrink-0 overflow-hidden rounded-sm border bg-neutral-50">
-                          <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center" />
-                        </div> -->
+                      <ul  role="list" class="">
+                        <li >
+                          <template x-for="item in items" :key="item" class="mt-7">
+                            <div class="h-32 w-24 flex-shrink-0 overflow-hidden rounded-sm border bg-neutral-50 gap-9 mt-3">
+                              <img
+                                :src="`http://localhost/SWAP-MEXIBUS/src/images/uploads/images/${item.imagen_espacio}`"
+                                alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
+                                class="h-full w-full object-cover object-center" />
+                            </div>
+                          </template>
+
+                        </li>
+                      </ul>
+
+
 
                       <div class="ml-4 flex flex-1 flex-col">
                         <ul role="list" class="-my-6 divide-y divide-neutral-200">
-                          <template x-for="item in items" :key="item.id">
+                          <template x-for="item in items" :key="item">
                             <li>
                               <div>
                                 <div class="flex justify-between text-sm text-gray-900">
@@ -111,7 +123,7 @@
 
                                 <div class="flex">
                                   <div class="text-right">
-                                    <p class="text-m text-neutral-400" x-text="`Precio:  ${item.precio_unitario}`"></p>
+                                    <p class="text-m text-neutral-400" x-text="`Precio:  ${item.precio}`"></p>
                                     <p class="text-sm font-bold text-orange-600"></p>
 
                                     <!-- <div class="mt-1 flex flex-row items-center gap-2">
@@ -153,16 +165,16 @@
                         <div class="flex flex-col gap-2">
                           <div class="flex justify-between text-base text-gray-900">
                             <p>Subtotal</p>
-                            <p x-text="` $ ${item.precio_unitario}`"></p>
+                            <!--  <p x-text="` $ ${item.precio}`"></p> -->
                           </div>
                           <div class="flex justify-between text-base text-gray-900">
                             <p>IVA 16%</p>
-                            <p  x-text="` $ ${item.iva}`"></p>
+                            <!--    <p x-text="` $ ${item.iva}`"></p> -->
                           </div>
-                         
+
                           <div class="flex justify-between text-base text-gray-900">
                             <p>Precio Final</p>
-                            <p x-text="` $ ${item.precio_final}`"></p>
+                            <!--   <p x-text="` $ ${item.precio_final}`"></p> -->
                           </div>
                           <!-- <div class="flex flex-row items-center justify-end gap-2">
                             <svg class="h-4 w-4 rotate-90 stroke-2 text-orange-600" fill="none" stroke="currentColor"
@@ -193,12 +205,14 @@
                           <div class="mt-auto flex flex-col gap-2 pt-4">
                             <div class="">
                               <a href="#"
-                                class="flex items-center justify-center rounded-md border border-transparent bg-neutral-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-900">Finalizar Compra</a>
+                                class="flex items-center justify-center rounded-md border border-transparent bg-neutral-800 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-neutral-900">Finalizar
+                                Compra</a>
                             </div>
                             <div class="flex justify-center text-center text-sm text-gray-500">
                               <p>
                                 of <button type="button"
-                                  class="font-medium text-neutral-600 hover:text-neutral-500">Seguir Explorando<span aria-hidden="true"> &rarr;</span></button>
+                                  class="font-medium text-neutral-600 hover:text-neutral-500">Seguir Explorando<span
+                                    aria-hidden="true"> &rarr;</span></button>
                               </p>
                             </div>
                           </div>
@@ -278,38 +292,50 @@
       };
     }
 
-
-    document.addEventListener('alpine:init', () => {
-      console.log(localStorage.getItem('id'));
-      Alpine.data('carrito', () => ({
+    function carrito() {
+      return {
         items: [],
+        socket: null,
 
-        cargarCarrito() {
-          fetch('http://localhost/SWAP-MEXIBUS/server/getCarrito.php', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              id_contratante: localStorage.getItem('id'),
-            }),
-          })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success) {
-                this.items = data.items;
-                console.log(this.items);
-              } else {
-                const message = data.message || data.error || "Ocurrió un error inesperado.";
-                alert(message);
-              }
-            })
-            .catch(error => {
-              console.error('Error al cargar el carrito:', error);
-            });
-        },
-      }));
-    });
+
+        init() {
+
+          this.socket = new WebSocket('ws://localhost:1080');
+
+          this.socket.onopen = () => {
+            console.log("La conexión al WebSocket está activa.");
+            this.socket.send(JSON.stringify({
+              action: 'getCarrito',
+              id_carrito: localStorage.getItem('id_carrito')
+            }));
+          };
+
+
+          this.socket.onmessage = (event) => {
+            const respuesta = JSON.parse(event.data);
+            console.log(respuesta.data);
+            if (respuesta.accion === 'getCarritoRespuesta') {
+              this.items = respuesta.data;
+              console.log("Items asignados:", this.items);
+            }
+          };
+
+          this.socket.onerror = (event) => {
+            console.error("Error en la conexión WebSocket", event);
+          };
+
+
+          this.socket.onclose = (event) => {
+            console.log("La conexión WebSocket se ha cerrado", event);
+          };
+
+
+        }
+      }
+    }
+
+
+
 
 
   </script>
